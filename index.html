@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        margin: 10x;
+        font-family: helvetica, sans-serif}
+      a {
+        display: inline-block;
+        width: 25%;
+        background: #333;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        margin: 5px 5px 20px 0;
+        font-size: 3rem;
+        }
+      a:hover {
+        background: #666;
+      }
+    </style>
+    <script src="p5.min.js"></script>
+    <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
+    <!--<script src="p5.svg.js"></script> -->
+    <script language="javascript">
+
+    var w = 0;
+    margin = 10; //match document margin
+
+    function setup() {
+      //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2,SVG);
+      //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2);
+      //square on mobile
+      createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
+    }
+
+    function grid(margin,w,h) {
+      noFill();
+      strokeWeight(0.5);
+      stroke("#000");
+      cols = 400;
+      rows = 400;
+      x = y = margin;
+
+      for(row = 0; row < rows; row++){
+        for (col=0; col < cols; col++) {
+            rect(x,y,w,h);
+            x = (width * -2) + margin + (col * (w + margin))
+            y = (height * -2) + margin + (row * (h + margin)) + (h/2 * (col % 2));
+        }
+      }
+    }
+
+    function pattern() {
+      clear();
+      turns = 3;
+      margin = width/(50+(Math.random()*150));
+      w = margin * Math.random()*4;
+      h = w * Math.random()*4;
+
+      for(i = 0 ; i < turns; i ++ ) {
+        rotate(PI/turns);
+        translate(width/-5,height/-2)
+        grid(margin,w,h);
+      }
+
+    }
+
+    function stars() {
+      how_many = rando(2,55);
+
+      //fuzziness = rando(0,0.5);
+
+      for(i = 0; i < how_many; i++){
+        radius = width/rando(0.25,20);
+        turns = rando(10,5000);
+        thickness = rando(0.25,20);
+        //per circle fuzziness
+        fuzziness = rando(0,0.5);
+
+        star(rando(0,width),rando(0,height),radius,0.025,turns, fuzziness);
+        //console.log (rando(0,5));
+      }
+    }
+
+    function rando(min,max) {
+      return (min + (Math.random()*(max-min)))
+    }
+
+
+    function star(x,y,radius,thickness,lines, fuzziness) {
+      strokeWeight(thickness);
+      //stroke("#fff");
+      turns = lines;
+      //stroke(rando(0,255),rando(0,255),rando(0,255));
+      //stroke(rando(0,50),rando(0,80),rando(30,150));
+
+
+      for(var i = 0 ; i < turns; i ++ ) {
+        push()
+        translate(x,y);
+        rotate((i * 2*PI/turns) * rando(0.99999,1.00001));
+        wiggle_rad = radius * rando(1-fuzziness,1+fuzziness);
+        line(-wiggle_rad,-wiggle_rad,wiggle_rad,wiggle_rad);
+        pop()
+      }
+    }
+
+    function mousePressed() {
+      main();
+    }
+
+    function main() {
+      setup();
+      clear();
+      if(Math.random() < 0.5) {
+        background("#000");
+        stroke("#fff");
+      }else{
+        background("#fff");
+        stroke("#000");
+      }
+      //stroke(rando(0,255),rando(0,255),rando(0,255));
+      stars();
+    }
+    </script>
+  </head>
+  <body onload="main()" onresize="main()">
+  <!--  <a href="javascript: pattern()">Pattern</a>
+    <a href="javascript: main()">X</a>-->
+    <!--<a href="javascript: save()">Save</a-->
+  </body>
+</html>
