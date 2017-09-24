@@ -51,6 +51,78 @@
       }
     }
 
+    function poly_line_mountain() {
+      //noFill();
+      noStroke()
+      shade = 250
+      smoothness = height*Math.random();
+      xSteps = width * Math.random();
+      thickness(0.2)
+      how_many = 15;
+      first_y = y = height * rando(0.4, 0.6);
+      for(i = 0; i < how_many; i ++) {
+        x = 0;
+        beginShape();
+        while(x < width) {
+          vertex(x,y);
+          x += rando(width/xSteps,width/xSteps);
+          y += rando(-height/smoothness, height/smoothness);
+        }
+        vertex(width,y);
+        vertex(width,height);
+        vertex(0,height);
+        vertex(0,first_y);
+        endShape();
+        fill(shade, shade, shade);
+        shade *= 1-(i/how_many);
+        y += rando(height/200,height/100);
+
+      }
+    }
+    function thickness(t) {
+      strokeWeight(t);
+    }
+
+    function mountain() {
+      x = 0;//rando(0, width/800);
+      y = height * rando(0.4, 0.6);
+      //space = width/900; //width/rando(300,800);
+      thickness = 1;
+      //thickness = rando(0.025,0.05);
+      space = thickness;
+      strokeWeight(thickness);
+      shade = 240;
+      flatness = rando(40,700); //higher is less craggy
+      dy = rando(-height/flatness, height/flatness);
+      resolution = rando(0.3, 0.9);
+
+      while( y < height) {
+        stroke(shade, shade, shade);
+        line(x,y,x,height);
+        y += dy
+        if(Math.random()> resolution){
+          dy = rando(-height/flatness, height/flatness);
+        }
+        x += space //rando(space*0.9, space*1.1);
+        if(x >= width) {
+          resolution = rando(0.3, 0.6);
+          //flatness = rando(100,900); //higher is less craggy
+          shade *= 0.7
+          //x = 0;
+          x = 0//rando(0, width/800);
+          y += rando(height/50, height/15); //rando(height/50, height/20);
+          //thickness *= 1.3;
+          strokeWeight(thickness);
+          debug(y);
+          debug(height);
+        }
+      }
+    }
+
+    function debug(msg) {
+      console.log(msg);
+    }
+
     function pattern() {
       clear();
       turns = 3;
@@ -65,6 +137,15 @@
       }
 
     }
+
+    function hydro_vents() {
+      //stroke(rando(0,255),rando(0,255),rando(0,255));
+      //stars();
+      for(j = 0; j < 3; j++) {
+        fuzzyChain();
+      }
+    }
+
 
     function fuzzyChain () {
         //x1 = rando(0,)
@@ -84,8 +165,8 @@
             angle = (2*Math.PI) + rando(-Math.PI*0.8, Math.PI*0.8);
             old_rad = rad;
             rad = rando(min_rad, max_rad);
-            max_rad *= 1.01;
-            max_fuzz *= 1.01;
+            max_rad *= 1.008;
+            max_fuzz *= 1.006;
             distance = (rad + old_rad);
             /*old_x = x;
             old_y = y;
@@ -143,9 +224,7 @@
       main();
     }
 
-    function main() {
-      setup();
-      clear();
+    function randomInvert(){
       if(Math.random() < 0.5) {
         background("#000");
         stroke("#fff");
@@ -153,11 +232,14 @@
         background("#fff");
         stroke("#000");
       }
-      //stroke(rando(0,255),rando(0,255),rando(0,255));
-      //stars();
-      for(j = 0; j < 3; j++) {
-        fuzzyChain();
-      }
+    }
+
+    function main() {
+      setup();
+      clear();
+      //randomInvert();
+      //mountain();
+      poly_line_mountain();
     }
     </script>
   </head>
