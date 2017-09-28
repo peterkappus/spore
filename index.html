@@ -2,7 +2,7 @@
   <head>
     <style type="text/css">
       body {
-        margin: 20px;
+        margin: 40px;
         font-family: helvetica, sans-serif}
       a {
         display: inline-block;
@@ -20,11 +20,11 @@
     </style>
     <script src="p5.min.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
-    <script src="p5.svg.js"></script>
+    <!--script src="p5.svg.js"></script-->
     <script language="javascript">
 
     var w = 0;
-    margin = 20; //match document margin
+    margin = 40; //match document margin
 
     function setup() {
       //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2,SVG);
@@ -118,6 +118,7 @@
         }
       }
     }
+
 
     function debug(msg) {
       console.log(msg);
@@ -226,20 +227,89 @@
 
     function randomInvert(){
       if(Math.random() < 0.5) {
-        background("#000");
-        stroke("#fff");
+        background_color = "#fff";
+        foreground_color= "#000";
       }else{
-        background("#fff");
-        stroke("#000");
+        background_color = "#000";
+        foreground_color = "#fff";
+      }
+    }
+
+    function setColors() {
+      background(background_color);
+      stroke(foreground_color);
+      fill(foreground_color);
+    }
+
+    function haystack() {
+      //randomInvert();
+      margin = width/20
+      x = margin
+      startY = height/2;
+      how_many = rando(150,1000);
+      ball_size = height/rando(20,200);
+      thickness(rando(width/10000,width/200));
+
+      for(i = 0; i < how_many; i++) {
+        x = rando(margin, width-margin);
+        y = startY * rando(0.05,1.02);
+        angle = Math.PI / 2* rando(0.9, 1.1);
+
+        x2 = rando(margin, width-margin);
+        y2 = rando(startY, height-margin);
+
+        line(x,y, x2, y2);
+        if(Math.random() > 0.5) {
+          color = background_color
+        }else{
+          color = foreground_color
+        }
+        fill(color)
+        ellipse(x,y,ball_size);
+        ellipse(x2,y2, ball_size);
+        //stroke("#000");
+      }
+    }
+
+    function cloud(x,y, rad) {
+      how_many = rando(4,200)
+      for(i = 0; i < how_many; i++) {
+        c = color(255,255,255,10);
+        noFill();
+        //fill(c);
+        noStroke();
+        stroke(c);
+        rad *= 1.01
+        x *= rando(0.99,1.01);
+        y *= rando(0.99,1.01);
+        ellipse(x,y, rad);
+      }
+    }
+
+    function clouds() {
+      how_many  = rando(5,500);
+      x = width/2; //rando(margin, width-margin);
+      y = height/2; //rando(margin, height-margin);
+
+      for(j = 0; j < how_many; j++){
+        x *= rando(0.9,1.1);
+        y *= rando(0.9,1.1);
+        rad = rando(height/30, height/8);
+        cloud(x,y,rad);
       }
     }
 
     function main() {
       setup();
       clear();
-      //randomInvert();
+      randomInvert();
+      /*foreground_color= "#fff";
+      background_color = "#000";*/
+      setColors();
       //mountain();
-      poly_line_mountain();
+      //poly_line_mountain();
+      //haystack();
+      clouds();
     }
     </script>
   </head>
