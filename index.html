@@ -272,9 +272,15 @@
     }
 
     function cloud(x,y, rad) {
-      how_many = rando(4,200)
-      for(i = 0; i < how_many; i++) {
+      how_many = rando(4,200);
+      c = "#fff";
+      if(foreground_color === "#000") {
+        c = color(0,0,0,10);
+      }else{
         c = color(255,255,255,10);
+      }
+      //c = color(255,255,255,10);
+      for(i = 0; i < how_many; i++) {
         noFill();
         //fill(c);
         noStroke();
@@ -287,6 +293,8 @@
     }
 
     function clouds() {
+      //console.log(foreground_color);
+      //c = color(255,255,255,10);
       how_many  = rando(5,500);
       x = width/2; //rando(margin, width-margin);
       y = height/2; //rando(margin, height-margin);
