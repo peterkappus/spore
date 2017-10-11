@@ -20,10 +20,11 @@
     </style>
     <script src="p5.min.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
-    <!--script src="p5.svg.js"></script-->
+    <script src="p5.svg.js"></script>
+    <script src="file_saver.js"></script>
     <script language="javascript">
 
-    var w = 0;
+    var canvas;
     margin = 40; //match document margin
 
     function setup() {
@@ -31,7 +32,10 @@
       //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2);
       //square on mobile
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
-      createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
+      canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
+      //createCanvas(600, 200, SVG); // Create SVG Canvas
+
+      //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
     }
 
     function grid(margin,w,h) {
@@ -52,14 +56,16 @@
     }
 
     function poly_line_mountain() {
+      clear();
       //noFill();
       noStroke()
-      shade = 250
+      maxShade = 250
+      minShade = 20;
       smoothness = height*Math.random();
       xSteps = width * Math.random();
       thickness(0.2)
-      how_many = 15;
-      first_y = y = height * rando(0.4, 0.6);
+      how_many = 2;
+      first_y = y = height * rando(0.2, 0.6);
       for(i = 0; i < how_many; i ++) {
         x = 0;
         beginShape();
@@ -68,14 +74,18 @@
           x += rando(width/xSteps,width/xSteps);
           y += rando(-height/smoothness, height/smoothness);
         }
+
         vertex(width,y);
         vertex(width,height);
         vertex(0,height);
         vertex(0,first_y);
         endShape();
+
+        shade = minShade + ((maxShade - minShade) * (1-(i/how_many)));
         fill(shade, shade, shade);
-        shade *= 1-(i/how_many);
-        y += rando(height/200,height/100);
+
+        console.log(shade);
+        y += rando(height/80,height/20);
 
       }
     }
@@ -84,6 +94,7 @@
     }
 
     function mountain() {
+      clear();
       x = 0;//rando(0, width/800);
       y = height * rando(0.4, 0.6);
       //space = width/900; //width/rando(300,800);
@@ -225,6 +236,19 @@
       main();
     }
 
+    function keyPressed() {
+      //alert(keyCode);
+      if(keyCode == ENTER) {
+        //data = canvas.elt.toBlob();
+        var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+
+        var blob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+        saveAs(blob, "file.svg");
+
+        //saveSVG(SVG, "svg","thing");
+      }
+    }
+
     function randomInvert(){
       if(Math.random() < 0.5) {
         background_color = "#fff";
@@ -233,6 +257,10 @@
         background_color = "#000";
         foreground_color = "#fff";
       }
+
+      //background_color = "#fff";
+      //foreground_color = "#005";
+
     }
 
     function setColors() {
@@ -242,7 +270,8 @@
     }
 
     function haystack() {
-      //randomInvert();
+      clear();
+      randomInvert();
       margin = width/20
       x = margin
       startY = height/2;
@@ -292,10 +321,57 @@
       }
     }
 
+    function rando_variance(variance) {
+      return rando(1-variance, 1+variance)
+    }
+
+    function skyline (height_multiplier,xScale,yScale, variance_amount) {
+      //set in parent function and passed in as an argument
+      //xScale = 20;
+      //yScale = 10;
+      margin = width/10;
+      //variance_amount = rando(0,0.05) * height_mulitiplier;
+      variance_amount *= height_multiplier;
+      x1 = x2 = margin;
+      y1 = y2 = height-margin;
+      while(x2 + width/xScale * rando_variance(variance_amount) < width-(margin*2)) {
+        x2 = x1 * rando_variance(variance_amount);
+        y2 = (height - margin) - (height_multiplier * (margin + ((height-(margin*3)) * Math.round(Math.random() * yScale)/yScale * rando_variance(variance_amount))));
+
+        //vert
+        line(x1,y1,x2,y2);
+
+        x1 = x2 + width/xScale * rando_variance(variance_amount);
+        y1 = y2 * rando_variance(variance_amount);
+
+        //horiz
+        line(x2,y2,x1,y1);
+      }
+
+      //vert
+      line(x1,y1,x1,height-margin);
+
+
+    }
+
+    function city() {
+      clear();
+      randomInvert();
+      count = 300;
+      thickness(width/2000);
+      xScale = rando(3,40);
+      yScale = rando(3,40);
+      variance_amount = rando(0,0.05);
+      for(i = 1; i <= count; i++ ) {
+        skyline(i/count,xScale,yScale, variance_amount);
+      }
+    }
+
+
     function clouds() {
       //console.log(foreground_color);
       //c = color(255,255,255,10);
-      how_many  = rando(5,500);
+      how_many  = rando(2,100);
       x = width/2; //rando(margin, width-margin);
       y = height/2; //rando(margin, height-margin);
 
@@ -307,23 +383,95 @@
       }
     }
 
+    function city2 () {
+      clear();
+      maxThickness = 5;
+      minThickness = 0.5;
+      count = 1000;
+      minWidth = width/50;
+      maxWidth = width*0.2;
+      minHeight = height/10;
+      maxHeight = height-(margin * 2);
+      margin = width/20;
+      for(i = 1; i <= count; i ++) {
+        maxHeight *= 0.999;
+        fill("#fff");
+        thickness = minThickness + (maxThickness * i / count);
+        strokeWeight(thickness);
+
+        buildingHeight = minHeight + (maxHeight * Math.random());
+        //if (Math.random() > 0.95)
+        //  buildingHeight *= 1.2;
+
+        x = margin + width*Math.random()
+        buildingWidth = minWidth + Math.random() * maxWidth
+        if(x + buildingWidth < width - (margin*2)) {
+          rect(x, height-buildingHeight, buildingWidth, buildingHeight);
+        }
+      }
+
+    }
+
+    //boom!
+    //TODO: add "baseColor" parameter and do shades of that color...somehow.
+    function autumnExplo(){
+      clear();
+      count = 10000;
+      size = width/80
+      maxSize = width/20;
+      minRad = width*0.15;
+      maxRad = width*0.35;
+      minShade = 130;
+      thickness(0.5)
+      //noStroke();
+      //noFill();
+      for(i =0; i < count; i++) {
+        angle = rando(0, Math.PI*2);
+        rad = rando(minRad,maxRad);
+        shade =  minShade + ((255-minShade) * (rad-minRad)/(maxRad-minRad))
+
+        if(Math.random() > 0.5) {
+          fill(0, shade*rando(0,1), shade);
+        }else{
+          fill(shade, shade*rando(0,1), 0);
+        }
+        //fill(shade*rando(0.5,1), shade*rando(0.2,0.4), 0);
+
+        //fill(0, shade*rando(0,1), shade);
+
+        x = width/2  + (Math.sin(angle) * rad);
+        y = height/2  + (Math.cos(angle) * rad);
+        size = maxSize * ((rad-minRad)/(maxRad-minRad));
+
+        ellipse(x,y,size);
+        //ellipse(width/2,height/2,height/10);
+      }
+    }
+
     function main() {
-      setup();
+      //autumnExplo();
+      //city();
+      //city2();
+      /*(setup();
       clear();
       randomInvert();
+      //city();
+      */
+      //setColors();
+      //stars();
+
       /*foreground_color= "#fff";
       background_color = "#000";*/
-      setColors();
       //mountain();
-      //poly_line_mountain();
+      poly_line_mountain();
       //haystack();
-      clouds();
+      //clouds();
     }
     </script>
   </head>
   <body onload="main()" onresize="main()">
-  <!--  <a href="javascript: pattern()">Pattern</a>
-    <a href="javascript: main()">X</a>-->
+  <!--<a href="javascript: city()">City</a>-->
+  <!--<a href="javascript: main()">X</a>-->
     <!--<a href="javascript: save()">Save</a-->
   </body>
 </html>
