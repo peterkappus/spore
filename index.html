@@ -2,17 +2,19 @@
   <head>
     <style type="text/css">
       body {
-        margin: 40px;
         font-family: helvetica, sans-serif}
+      canvas {
+        margin: 40px;
+      }
       a {
         display: inline-block;
-        width: 25%;
         background: #333;
+        padding: 0.5rem 1rem;
         color: #fff;
         text-align: center;
         text-decoration: none;
         margin: 5px 5px 20px 0;
-        font-size: 3rem;
+        font-size: 1.5rem;
         }
       a:hover {
         background: #666;
@@ -27,12 +29,26 @@
     var canvas;
     margin = 40; //match document margin
 
+    var foreground_color;
+    var background_color;
+
+    function thickness(t) {
+      strokeWeight(t);
+    }
+
     function setup() {
       //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2,SVG);
       //createCanvas(window.innerWidth-margin*2, window.innerHeight-margin*2);
       //square on mobile
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
-      canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
+      //if we're probably on a desktop
+      //go with SVG
+      if(window.innerWidth > 800) {
+        canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
+      }else {
+        //regular canvas (much faster for mobile :)
+        canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
+      }
       //createCanvas(600, 200, SVG); // Create SVG Canvas
 
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
@@ -89,11 +105,8 @@
 
       }
     }
-    function thickness(t) {
-      strokeWeight(t);
-    }
 
-    function mountain() {
+    function mountains() {
       clear();
       x = 0;//rando(0, width/800);
       y = height * rando(0.4, 0.6);
@@ -130,7 +143,6 @@
       }
     }
 
-
     function debug(msg) {
       console.log(msg);
     }
@@ -147,10 +159,9 @@
         translate(width/-5,height/-2)
         grid(margin,w,h);
       }
-
     }
 
-    function hydro_vents() {
+    function hydroVents() {
       //stroke(rando(0,255),rando(0,255),rando(0,255));
       //stars();
       for(j = 0; j < 3; j++) {
@@ -169,7 +180,7 @@
         max_fuzz = 0.08;
         i = 0;
         rad = rando(min_rad, max_rad);
-        while(y > 0 && i < 50000) {
+        while(y > 0 && i < 50) {
             thickness = 0.025;
             turns = rando(10,5000);
             fuzziness = rando(max_fuzz * 0.1, max_fuzz)
@@ -186,13 +197,17 @@
             x -= sin(angle) * distance;
             y -= cos(angle) * distance;
             //console.log(y);
-            console.log(sin(angle) * (rad + old_rad));
+            //console.log(i);
+            //console.log(sin(angle) * (rad + old_rad));
             //rad = new_rad;
             i++;
         }
     }
 
     function stars() {
+      clear();
+      randomInvert();
+      setColors();
       how_many = rando(2,55);
 
       //fuzziness = rando(0,0.5);
@@ -232,9 +247,9 @@
       }
     }
 
-    function mousePressed() {
-      main();
-    }
+    /*function mousePressed() {
+      eval(lastFuncString + "()");
+    }*/
 
     function keyPressed() {
       //alert(keyCode);
@@ -252,7 +267,7 @@
     function randomInvert(){
       if(Math.random() < 0.5) {
         background_color = "#fff";
-        foreground_color= "#000";
+        foreground_color = "#000";
       }else{
         background_color = "#000";
         foreground_color = "#fff";
@@ -272,12 +287,13 @@
     function haystack() {
       clear();
       randomInvert();
+      setColors();
       margin = width/20
       x = margin
       startY = height/2;
-      how_many = rando(150,1000);
+      how_many = rando(10,800);
       ball_size = height/rando(20,200);
-      thickness(rando(width/10000,width/200));
+      thickness(rando(width/15000,width/200));
 
       for(i = 0; i < how_many; i++) {
         x = rando(margin, width-margin);
@@ -288,30 +304,34 @@
         y2 = rando(startY, height-margin);
 
         line(x,y, x2, y2);
+
         if(Math.random() > 0.5) {
-          color = background_color
+          fill(background_color);
         }else{
-          color = foreground_color
+          fill(foreground_color);
         }
-        fill(color)
         ellipse(x,y,ball_size);
         ellipse(x2,y2, ball_size);
         //stroke("#000");
       }
     }
 
-    function cloud(x,y, rad) {
+    function cloud(x,y, rad, isFilled) {
       how_many = rando(4,200);
-      c = "#fff";
-      if(foreground_color === "#000") {
-        c = color(0,0,0,10);
+      //c = "#fff";
+      if(foreground_color == "#000") {
+        c = color(0,0,0,rando(10,30));
       }else{
-        c = color(255,255,255,10);
+        c = color(255,255,255,rando(10,30));
       }
+      //alert(c);
       //c = color(255,255,255,10);
       for(i = 0; i < how_many; i++) {
         noFill();
-        //fill(c);
+        if(isFilled) {
+          fill(c);
+        }
+
         noStroke();
         stroke(c);
         rad *= 1.01
@@ -358,10 +378,11 @@
       clear();
       randomInvert();
       count = 300;
-      thickness(width/2000);
+      thickness(width/1500);
       xScale = rando(3,40);
-      yScale = rando(3,40);
-      variance_amount = rando(0,0.05);
+      yScale = rando(20,80);
+      //yScale = 1
+      variance_amount = rando(0,0.01);
       for(i = 1; i <= count; i++ ) {
         skyline(i/count,xScale,yScale, variance_amount);
       }
@@ -369,17 +390,22 @@
 
 
     function clouds() {
+      clear();
+      randomInvert();
+      setColors();
       //console.log(foreground_color);
       //c = color(255,255,255,10);
       how_many  = rando(2,100);
       x = width/2; //rando(margin, width-margin);
-      y = height/2; //rando(margin, height-margin);
+      y = height/2; //rando(height*0.2,height*0.8); //rando(margin, height-margin);
 
+      isFilled = (Math.random() > 0.5);
+      //isFilled = true;
       for(j = 0; j < how_many; j++){
         x *= rando(0.9,1.1);
         y *= rando(0.9,1.1);
-        rad = rando(height/30, height/8);
-        cloud(x,y,rad);
+        rad = rando(height/80, height/10);
+        cloud(x,y,rad, isFilled);
       }
     }
 
@@ -448,9 +474,14 @@
       }
     }
 
+    function generate(whichOne) {
+      eval(whichOne + "()");
+      lastFuncString = whichOne;
+    }
+
     function main() {
       //autumnExplo();
-      //city();
+      city();
       //city2();
       /*(setup();
       clear();
@@ -463,15 +494,20 @@
       /*foreground_color= "#fff";
       background_color = "#000";*/
       //mountain();
-      poly_line_mountain();
+      //poly_line_mountain();
       //haystack();
       //clouds();
     }
     </script>
   </head>
   <body onload="main()" onresize="main()">
-  <!--<a href="javascript: city()">City</a>-->
-  <!--<a href="javascript: main()">X</a>-->
+  <a href="javascript: generate('city')">City</a>
+  <a href="javascript: generate('mountains')">Mtns</a>
+  <a href="javascript: generate('stars')">Stars</a>
+  <a href="javascript: generate('clouds')">Clouds</a>
+  <a href="javascript: generate('haystack')">Haystack</a>
+  <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
+  <br>
     <!--<a href="javascript: save()">Save</a-->
   </body>
 </html>
