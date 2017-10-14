@@ -32,7 +32,7 @@
     var foreground_color;
     var background_color;
 
-    function thickness(t) {
+    function setThickness(t) {
       strokeWeight(t);
     }
 
@@ -79,7 +79,7 @@
       minShade = 20;
       smoothness = height*Math.random();
       xSteps = width * Math.random();
-      thickness(0.2)
+      setThickness(0.2)
       how_many = 2;
       first_y = y = height * rando(0.2, 0.6);
       for(i = 0; i < how_many; i ++) {
@@ -293,7 +293,7 @@
       startY = height/2;
       how_many = rando(10,800);
       ball_size = height/rando(20,200);
-      thickness(rando(width/15000,width/200));
+      setThickness(rando(width/15000,width/200));
 
       for(i = 0; i < how_many; i++) {
         x = rando(margin, width-margin);
@@ -378,7 +378,7 @@
       clear();
       randomInvert();
       count = 300;
-      thickness(width/1500);
+      setThickness(width/1500);
       xScale = rando(3,40);
       yScale = rando(20,80);
       //yScale = 1
@@ -440,7 +440,7 @@
 
     //boom!
     //TODO: add "baseColor" parameter and do shades of that color...somehow.
-    function autumnExplo(){
+    function wreath(){
       clear();
       count = 10000;
       size = width/80
@@ -448,7 +448,7 @@
       minRad = width*0.15;
       maxRad = width*0.35;
       minShade = 130;
-      thickness(0.5)
+      setThickness(0.5)
       //noStroke();
       //noFill();
       for(i =0; i < count; i++) {
@@ -500,12 +500,13 @@
     }
     </script>
   </head>
-  <body onload="main()" onresize="main()">
+  <body onload="main()" onresize="setup()">
   <a href="javascript: generate('city')">City</a>
   <a href="javascript: generate('mountains')">Mtns</a>
   <a href="javascript: generate('stars')">Stars</a>
   <a href="javascript: generate('clouds')">Clouds</a>
   <a href="javascript: generate('haystack')">Haystack</a>
+  <a href="javascript: generate('wreath')">Wreath</a>
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
     <!--<a href="javascript: save()">Save</a-->
