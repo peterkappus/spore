@@ -308,7 +308,8 @@
         if(Math.random() > 0.5) {
           fill(background_color);
         }else{
-          fill(foreground_color);
+          fill(randColor());
+          //fill(foreground_color);
         }
         ellipse(x,y,ball_size);
         ellipse(x2,y2, ball_size);
@@ -319,11 +320,13 @@
     function cloud(x,y, rad, isFilled) {
       how_many = rando(4,200);
       //c = "#fff";
-      if(foreground_color == "#000") {
-        c = color(0,0,0,rando(10,30));
+      /*if(foreground_color == "#000") {
+        c = color(foreground_c,0,0,rando(10,30));
       }else{
         c = color(255,255,255,rando(10,30));
-      }
+      }*/
+      c = color(foreground_color._getRed(), foreground_color._getGreen(), foreground_color._getBlue(), rando(10,30));
+
       //alert(c);
       //c = color(255,255,255,10);
       for(i = 0; i < how_many; i++) {
@@ -388,23 +391,79 @@
       }
     }
 
+// TODO: Port from Spectra
+/*
+    function splatter() {
+      class window.Specks
+        constructor: (cx,cy,color) ->
+          max_distance = sol.width
+          min_distance = 0
+          min_size = sol.width/1200
+          max_size = sol.width/120
+          #color = "#000"
 
+          for i in [1..sol.rando(3,200)]
+            angle = Math.PI * 2 * Math.random()
+            distance = sol.rando(min_distance, max_distance)
+            #size = min_size + ((max_distance - distance) / max_distance * (max_size-min_size))
+            size = min_size + sol.rando(0,((max_distance - distance) / max_distance * (max_size-min_size)))
+
+            x = cx + (Math.cos(angle) * distance)
+            y = cy + (Math.sin(angle) * distance)
+
+            #thickness = sol.rando(sol.width/800,sol.width/90)
+            #console.log(x)
+
+            sol.canvas.circle(size).cx(x).cy(y).fill({color: color})
+    }
+  */
+
+
+    function randColor() {
+      return(color(random(255),random(255),random(255)));
+    }
     function clouds() {
-      clear();
-      randomInvert();
-      setColors();
+      //clear();
+      //randomInvert();
+      //background_color =
+      background(random(["#fc0","#0af","#fffffe","#332105","#000",randColor()]));
+
+
       //console.log(foreground_color);
       //c = color(255,255,255,10);
       how_many  = rando(2,100);
       x = width/2; //rando(margin, width-margin);
       y = height/2; //rando(height*0.2,height*0.8); //rando(margin, height-margin);
 
-      isFilled = (Math.random() > 0.5);
+      max_rad = rando(height/50, height/10);
+
+      //usually filled
+      isFilled = (Math.random() > 0.2);
+
+      //often colorful
+      colorful = Math.random() > 0.4;
+
+      foreground_color = randColor();
+
+
       //isFilled = true;
       for(j = 0; j < how_many; j++){
-        x *= rando(0.9,1.1);
-        y *= rando(0.9,1.1);
-        rad = rando(height/80, height/10);
+
+        if(colorful) {
+          foreground_color = randColor();
+        }
+
+        stroke(foreground_color);
+        fill(foreground_color);
+        //setColors();
+
+        rad = rando(height/500, max_rad);
+        x = width * rando(0.25, 0.75);
+        y = height * rando(0.25, 0.75);
+
+
+        //x *= rando(0.9,1.1);
+        //y *= rando(0.9,1.1);
         cloud(x,y,rad, isFilled);
       }
     }
@@ -481,7 +540,7 @@
 
     function main() {
       //autumnExplo();
-      city();
+      //city();
       //city2();
       /*(setup();
       clear();
@@ -495,7 +554,7 @@
       background_color = "#000";*/
       //mountain();
       //poly_line_mountain();
-      //haystack();
+      haystack();
       //clouds();
     }
     </script>
