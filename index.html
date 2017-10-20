@@ -9,7 +9,7 @@
       a {
         display: inline-block;
         background: #333;
-        padding: 0.5rem 1rem;
+        padding: 1rem 2rem;
         color: #fff;
         text-align: center;
         text-decoration: none;
@@ -104,6 +104,39 @@
         y += rando(height/80,height/20);
 
       }
+    }
+
+    function upshot(){
+      clear();
+      howMany = 5000;
+      strokeWeight(0.1);
+      for(var i = 0; i < howMany; i++) {
+        twig();
+      }
+    }
+
+    function twig() {
+      x = width * 0.05// * random(0.05,0.3);
+      y = height * 0.95 //random(0.7,0.95);
+      //y = height*0.8;
+      min_dx = width / random(30,100);
+      max_dx = min_dx * random(1.1, 1.2);
+
+      min_dy = -height / random(30,100);
+      max_dy = min_dy * random(1.1, 1.3);
+
+
+      dx = random(min_dx, max_dx);
+      dy = random(min_dy, max_dy);
+
+      for(var i = 0; i < 30; i++) {
+        dx *= random(0.8,1.2);
+        dy *= random(0.8,1.2);
+        line(x,y,x+dx,y+dy);
+        x += dx// * random(0.9,1.1);
+        y += dy// * random(0.9,1.1);
+      }
+
     }
 
     function mountains() {
@@ -539,6 +572,7 @@
     }
 
     function main() {
+      circlePow();
       //autumnExplo();
       //city();
       //city2();
@@ -557,6 +591,146 @@
       //haystack();
       //clouds();
     }
+
+
+    class SmartCirc {
+
+      distanceTo(circ) {
+        return Math.hypot(this.x - circ.x,this.y - circ.y);
+      }
+
+      overlaps(circ) {
+        //if distance less than rad1 + rad2
+        var overlap_margin = width/200;
+        var overlap_amount = this.rad + circ.rad - this.distanceTo(circ);
+        //console.log(overlap_amount);
+        return (overlap_amount > -overlap_margin );
+      }
+
+      //overlaps any circ
+      overlapsAny(circs) {
+        //check 'em all
+        for(var j in circs ) {
+          //check this one
+          if(this.overlaps(circs[j])) {
+            //oops overlapping one
+            return(true);
+          }
+        }
+        //all clear!
+        return(false);
+      }
+
+      draw() {
+        //fancy!
+
+        var sides = 10;
+        noStroke();
+        fill(this.color);
+        ellipse(this.x,this.y,this.rad*2);
+        fill(20);
+        ellipse(this.x,this.y,this.rad);
+        for(var i = 0; i < sides; i++){
+          var angle = (2 * Math.PI) * i / sides;
+
+          //inner discs
+          var mini_x = this.x + this.rad * 0.5 * Math.sin(angle);
+          var mini_y = this.y + this.rad * 0.5 * Math.cos(angle);
+
+          ellipse(mini_x,mini_y,this.rad/4);
+
+          //middle
+          var mini_x = this.x + this.rad * 0.8 * Math.sin(angle);
+          var mini_y = this.y + this.rad * 0.8 * Math.cos(angle);
+
+          ellipse(mini_x,mini_y,this.rad/5);
+
+          //offset middle
+          var offset_angle = angle+((Math.PI*2)/(sides*2));
+          var mini_x = this.x + this.rad * 0.8 * Math.sin(offset_angle);
+          var mini_y = this.y + this.rad * 0.8 * Math.cos(offset_angle);
+
+          ellipse(mini_x,mini_y,this.rad/6);
+
+
+          //lines
+          var x2 = this.x + this.rad * Math.sin(angle);
+          var y2 = this.y + this.rad * Math.cos(angle);
+
+          push();
+          strokeWeight(this.rad/10);
+          stroke(20);
+          line(this.x,this.y,x2,y2);
+          pop();
+
+          //centre ring
+          push();
+          noFill();
+          stroke(this.color);
+          strokeWeight(this.rad/40);
+          ellipse(this.x,this.y,this.rad*0.7);
+          pop();
+        }
+
+        //middle dot
+        fill(color(255,180,0));
+        ellipse(this.x,this.y,this.rad*0.3);
+
+        /*
+        var x = this.x;
+        var y = this.y;
+        var rad = this.rad
+        while(Math.abs(x - width/2) > 1 && Math.abs(y - height/2) > 1) {
+          ellipse(x,y,rad*2);
+          x += (width/2 - x) * 0.1;
+          y += (height/2 - y) * 0.1;
+          rad = rad * 0.9
+        }*/
+      }
+    }
+
+    function circlePow() {
+      clear();
+      background(10);
+      var howMany = 500;
+
+      circs = [];
+      shade = 0;
+      for(var i = 0; i < howMany; i++ ) {
+        //shade += 255/howMany;
+        //find a place
+        var c = new SmartCirc();
+        var minRad = width/200;
+        var maxRad = width/5;
+        c.x = random(margin, width-margin);
+        c.y = random(margin,height-margin);
+        c.rad = random(minRad,maxRad);
+        c.color = 255;// color(200 + random(55));
+        //c.color = randColor();
+        var attempts = 0;
+        while(c.overlapsAny(circs)) {
+          if(attempts > 20) {
+            console.log("giving up! after " + attempts + " attempts");
+            c = null;
+            break;
+          }
+          //move away from circs[j]
+          debug("move away!");
+          c.x=random(margin, width-margin)
+          c.y = random(margin,height-margin);
+          c.rad = random(minRad,maxRad);
+
+          attempts++;
+        }
+        //do we still have a circ? or did we nuke it?
+        if(c != null) {
+          circs.push(c);
+          c.draw();
+        }
+      }
+    }
+
+
     </script>
   </head>
   <body onload="main()" onresize="setup()">
@@ -566,6 +740,9 @@
   <a href="javascript: generate('clouds')">Clouds</a>
   <a href="javascript: generate('haystack')">Haystack</a>
   <a href="javascript: generate('wreath')">Wreath</a>
+  <a href="javascript: generate('upshot')">Upshot</a>
+  <a href="javascript: generate('circlePow')">Circlepow!</a>
+
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
     <!--<a href="javascript: save()">Save</a-->
