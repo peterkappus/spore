@@ -285,6 +285,10 @@
     }*/
 
     function keyPressed() {
+      if(window.innerWidth < 800) {
+        alert("Window must be > 800px to capture an SVG");
+        return(false);
+      }
       //alert(keyCode);
       if(keyCode == ENTER) {
         //data = canvas.elt.toBlob();
@@ -315,6 +319,45 @@
       background(background_color);
       stroke(foreground_color);
       fill(foreground_color);
+    }
+
+    function vignette() {
+      var x = width/2;
+      var y = height/2;
+      var rad = width/8;
+      var alpha = 1;
+      var weight = width/300;
+
+      while(rad < (width) * Math.sqrt(2)){
+        push();
+          noFill();
+          strokeWeight(weight);
+          stroke(color(0,0,0,alpha));
+          ellipse(x,y,rad);
+          rad += weight;
+          alpha *= 1.015;
+        pop();
+      }
+    }
+
+    function cast(daColor) {
+      var x = width/2;
+      var y = height/2;
+      var rad = 1;
+      //var howMany = 80;
+      var alpha = 30;
+      var weight = width/100;
+
+      while(rad < (width) * Math.sqrt(2)){
+        push();
+          noFill();
+          strokeWeight(weight);
+          stroke(color(daColor._getRed(), daColor._getGreen(), daColor._getBlue(),alpha));
+          ellipse(x,y,rad);
+          rad += weight;
+          //alpha *= 0.998;
+        pop();
+      }
     }
 
     function haystack() {
@@ -573,6 +616,8 @@
 
     function main() {
       circlePow();
+      //cast(color(180,200,250));
+      vignette();
       //autumnExplo();
       //city();
       //city2();
@@ -621,60 +666,76 @@
         return(false);
       }
 
-      draw() {
-        //fancy!
+      fancyInside(x,y,rad,daColor) {
+        if(rad < width/500) {
+          return;
+        }
 
-        var sides = 10;
+        push();
+        var sides = Math.round(random(2,12));
         noStroke();
-        fill(this.color);
-        ellipse(this.x,this.y,this.rad*2);
+        fill(daColor);
+        ellipse(x,y,rad*2);
         fill(20);
-        ellipse(this.x,this.y,this.rad);
+        ellipse(x,y,rad);
         for(var i = 0; i < sides; i++){
-          var angle = (2 * Math.PI) * i / sides;
+          var angle = Math.PI + (2 * Math.PI) * i / sides;
 
           //inner discs
-          var mini_x = this.x + this.rad * 0.5 * Math.sin(angle);
-          var mini_y = this.y + this.rad * 0.5 * Math.cos(angle);
+          var mini_x = x + rad * 0.5 * Math.sin(angle);
+          var mini_y = y + rad * 0.5 * Math.cos(angle);
 
-          ellipse(mini_x,mini_y,this.rad/4);
+          ellipse(mini_x,mini_y,rad/4);
+          this.fancyInside(mini_x,mini_y,rad/10,daColor)
 
           //middle
-          var mini_x = this.x + this.rad * 0.8 * Math.sin(angle);
-          var mini_y = this.y + this.rad * 0.8 * Math.cos(angle);
+          var mini_x = x + rad * 0.75 * Math.sin(angle);
+          var mini_y = y + rad * 0.75 * Math.cos(angle);
 
-          ellipse(mini_x,mini_y,this.rad/5);
+          ellipse(mini_x,mini_y,rad/7);
+          this.fancyInside(mini_x,mini_y,rad/16,daColor)
 
           //offset middle
           var offset_angle = angle+((Math.PI*2)/(sides*2));
-          var mini_x = this.x + this.rad * 0.8 * Math.sin(offset_angle);
-          var mini_y = this.y + this.rad * 0.8 * Math.cos(offset_angle);
+          var mini_x = x + rad * 0.75 * Math.sin(offset_angle);
+          var mini_y = y + rad * 0.75 * Math.cos(offset_angle);
 
-          ellipse(mini_x,mini_y,this.rad/6);
+          ellipse(mini_x,mini_y,rad/6);
 
+          this.fancyInside(mini_x,mini_y,rad/6.5,daColor)
 
           //lines
-          var x2 = this.x + this.rad * Math.sin(angle);
-          var y2 = this.y + this.rad * Math.cos(angle);
+          var x2 = x + rad * Math.sin(angle);
+          var y2 = y + rad * Math.cos(angle);
 
           push();
-          strokeWeight(this.rad/10);
-          stroke(20);
-          line(this.x,this.y,x2,y2);
+            strokeWeight(rad/32);
+            stroke(20);
+            line(x,y,x2,y2);
           pop();
 
           //centre ring
           push();
-          noFill();
-          stroke(this.color);
-          strokeWeight(this.rad/40);
-          ellipse(this.x,this.y,this.rad*0.7);
+            noFill();
+            stroke(daColor);
+            strokeWeight(rad/30);
+            ellipse(x,y,rad*0.7);
           pop();
         }
 
         //middle dot
         fill(color(255,180,0));
-        ellipse(this.x,this.y,this.rad*0.3);
+        ellipse(x,y,rad*0.3);
+
+        //this.fancyInside(x,y,rad*0.2,daColor)
+
+        pop();
+      }
+
+      draw() {
+        //fancy!
+        this.fancyInside(this.x,this.y,this.rad,this.color);
+
 
         /*
         var x = this.x;
@@ -692,7 +753,9 @@
     function circlePow() {
       clear();
       background(10);
-      var howMany = 500;
+      var howMany = 800;
+      var minRad = width/200;
+      var maxRad = width/3;
 
       circs = [];
       shade = 0;
@@ -700,12 +763,10 @@
         //shade += 255/howMany;
         //find a place
         var c = new SmartCirc();
-        var minRad = width/200;
-        var maxRad = width/5;
         c.x = random(margin, width-margin);
         c.y = random(margin,height-margin);
         c.rad = random(minRad,maxRad);
-        c.color = 255;// color(200 + random(55));
+        c.color = 255//240 + (c.rad/maxRad * 15) //color(200 + random(55));
         //c.color = randColor();
         var attempts = 0;
         while(c.overlapsAny(circs)) {
@@ -718,7 +779,8 @@
           debug("move away!");
           c.x=random(margin, width-margin)
           c.y = random(margin,height-margin);
-          c.rad = random(minRad,maxRad);
+          //10% smaller...
+          c.rad *= 0.9;
 
           attempts++;
         }
