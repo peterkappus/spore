@@ -615,9 +615,10 @@
     }
 
     function main() {
-      circlePow();
+      grass();
+      //circlePow();
       //cast(color(180,200,250));
-      vignette();
+      //vignette();
       //autumnExplo();
       //city();
       //city2();
@@ -735,8 +736,6 @@
       draw() {
         //fancy!
         this.fancyInside(this.x,this.y,this.rad,this.color);
-
-
         /*
         var x = this.x;
         var y = this.y;
@@ -790,8 +789,53 @@
           c.draw();
         }
       }
+      vignette();
     }
 
+    function grass() {
+      var x = margin;
+      stroke("#000");
+      var scale = height/3;
+      var xscale = scale/3;
+      while (x < width-margin) {
+        strokeWeight(random(width/12000,width/3000));
+        //Use perlin noise!
+        var x2 = x + random(-noise(x)*xscale, noise(x)*xscale);
+        var y2 = height/2 - noise(x)*scale;
+
+        line(x,height,x2,y2);
+        if(Math.random() > 0.9) {
+          fill(255,255,255,random(220,250));
+          ellipse(x2,y2 + random(-height/10,height/5),random(width/80,width/20));
+        }
+        //move...
+        x += random(width/800,width/600);
+
+
+      }
+    }
+
+    function clot() {
+      stroke("#900");
+      var margin = width/20
+      var x = random(margin, margin*2)
+      var y = random(0,margin*2);
+
+      var steps = 300;
+
+      for(var i =0; i < steps; i++){
+        var dx = random(-width/500,width/500);
+        var dy = random(-width/500,width/500);
+
+        var x2 = x+ dx;
+        var y2 = y + dy;
+
+        line(x,y,x2,y2);
+        var x = x2
+      }
+
+
+    }
 
     </script>
   </head>
@@ -804,6 +848,8 @@
   <a href="javascript: generate('wreath')">Wreath</a>
   <a href="javascript: generate('upshot')">Upshot</a>
   <a href="javascript: generate('circlePow')">Circlepow!</a>
+  <a href="javascript: generate('clot')">Clot</a>
+  <a href="javascript: generate('grass')">Grass</a>
 
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
