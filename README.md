@@ -8,7 +8,7 @@ Beautiful things to look at.
 - If width > 800px you can press a key and grab an SVG.
 
 ## Converting SVG to PNG (or whatever)
-`cat file.svg | docker run -i dbtek/librsvg rsvg-convert -f png -w 10000> out.png`
+`cat file.svg | docker run -i dbtek/librsvg rsvg-convert -f png -w 10000 > out.png`
 Note: Use `-w` switch to provide width in pixels
 
 

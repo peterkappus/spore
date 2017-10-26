@@ -615,7 +615,7 @@
     }
 
     function main() {
-      grass();
+      //grass();
       //circlePow();
       //cast(color(180,200,250));
       //vignette();
@@ -736,16 +736,6 @@
       draw() {
         //fancy!
         this.fancyInside(this.x,this.y,this.rad,this.color);
-        /*
-        var x = this.x;
-        var y = this.y;
-        var rad = this.rad
-        while(Math.abs(x - width/2) > 1 && Math.abs(y - height/2) > 1) {
-          ellipse(x,y,rad*2);
-          x += (width/2 - x) * 0.1;
-          y += (height/2 - y) * 0.1;
-          rad = rad * 0.9
-        }*/
       }
     }
 
@@ -775,7 +765,7 @@
             break;
           }
           //move away from circs[j]
-          debug("move away!");
+          //debug("move away!");
           c.x=random(margin, width-margin)
           c.y = random(margin,height-margin);
           //10% smaller...
@@ -815,28 +805,102 @@
       }
     }
 
+    var clot_counter = 0;
+    function draw() {
+      if(clot_counter > 0 && clot_counter <= 50) {
+        clot();
+        clot_counter++;
+      }
+    }
+
+    function startClot() {
+      //start playing
+      clot_counter = 1;
+    }
+
     function clot() {
-      stroke("#900");
+      //stroke("#900");
+      strokeWeight(random(width/1200,width/300));
+      stroke(lerpColor(color("#500"),color("#a00"),random(0,1)));
       var margin = width/20
-      var x = random(margin, margin*2)
-      var y = random(0,margin*2);
+      /*var x = random(margin, margin*2)
+      var y = random(0,margin*2);*/
+
+      var x = width/2;
+      var y = height/2;
+      var dx = random(-width/100,width/100);
+      var dy = random(-width/100,width/100);
 
       var steps = 300;
 
       for(var i =0; i < steps; i++){
-        var dx = random(-width/500,width/500);
-        var dy = random(-width/500,width/500);
+        dy += random(-width/500,width/500);
+        dx += random(-width/500,width/500);
 
-        var x2 = x+ dx;
+        var x2 = x + dx;
         var y2 = y + dy;
 
         line(x,y,x2,y2);
-        var x = x2
-      }
+        x = x2;
+        y = y2;
 
+      }
 
     }
 
+    function neutrinos (){
+      var x1 = random(margin, width-margin);
+      var y1 = random(margin, height-margin);
+
+      for(i =0; i < 4000; i++) {
+        var x2 = random(margin, width-margin);
+        var y2 = random(margin, height-margin);
+        var weight = random(width/12000,width/3000);
+        var diam = width/80;
+
+        //MUTATE!
+        if(Math.random() > 0.9) {
+            weight *= random(1.1, 10);
+            diam *= random(0.5,2);
+        }
+        strokeWeight(weight);
+        line(x1,y1,x2,y2);
+        var point = getRandPointOnLine(x1,y1,x2,y2);
+        //debug(point.getY());
+        x1 = point.getX();
+        y1 = point.getY();
+        //fill(randColor());
+        ellipse(point.getX(), point.getY(),diam);
+      }
+
+    }
+
+    class Point {
+      constructor (x,y) {
+        this.x = x;
+        this.y = y;
+      }
+      getX() {
+        return this.x;
+      }
+      getY() {
+        return this.y;
+      }
+    }
+    function getRandPointOnLine(x1,y1,x2,y2) {
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+      var distance = dist(x1,y1,x2,y2); //same as Math.hypot?
+      var distance2 = Math.random() * distance;
+      var freshX = x1 + ((distance2/distance) * dx);
+      var freshY = y1 + ((distance2/distance) * dy);
+      return(new Point(freshX,freshY));
+
+      //a^2 + b^2 = c^2
+      //hyp = sqrt((x1-x2)^2 + (y2 - y1)^2))
+      //x1
+
+    }
     </script>
   </head>
   <body onload="main()" onresize="setup()">
@@ -848,8 +912,10 @@
   <a href="javascript: generate('wreath')">Wreath</a>
   <a href="javascript: generate('upshot')">Upshot</a>
   <a href="javascript: generate('circlePow')">Circlepow!</a>
-  <a href="javascript: generate('clot')">Clot</a>
+  <a href="javascript: generate('startClot')">Clot</a>
   <a href="javascript: generate('grass')">Grass</a>
+  <a href="javascript: generate('vignette')">Vignette</a>
+  <a href="javascript: generate('neutrinos')">neutrinos</a>
 
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
