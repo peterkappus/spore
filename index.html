@@ -614,6 +614,54 @@
       lastFuncString = whichOne;
     }
 
+    function boxRose(x,y,minRad,maxRad) {
+      var howMany = 100;
+      fill(foreground_color._getRed(),foreground_color._getGreen(),foreground_color._getBlue(),30);
+      noStroke();
+      push();
+
+      translate(x,y);
+      for(var i = 0; i < howMany; i++) {
+        //angleMode(RADIANS);
+        rotate(2*PI/howMany);
+        rect(0,0,random(minRad,maxRad),random(minRad,maxRad));
+        //rect(0,0,100,250);
+      }
+
+      pop();
+
+      /*
+      push();
+        translate(width/2,height/2);
+        var howMany = 600;
+        noFill();
+      for(var i = 0; i < howMany; i++) {
+        rect(0,0,1*i,1.3*i);
+        rotate(2*PI/howMany);
+        strokeWeight(0.001*i);
+
+      }
+      pop();
+      */
+    }
+
+    function boxRoses() {
+      foreground_color = color(0,0,0);
+      var howMany = random(1,5);
+      for(var i = 0; i < howMany; i++) {
+        //foreground_color = randColor();
+        var minRad = width/random(10,80);
+        var maxRad = width/random(2,10);
+        boxRose(random(margin,width-margin), random(margin, height-margin),minRad,maxRad);
+      }
+    }
+
+    function texture() {
+        for(var i = 0; i < 800; i++){
+          strokeWeight(random(width/80,))
+        }
+    }
+
     function main() {
       //grass();
       //circlePow();
@@ -739,6 +787,36 @@
       }
     }
 
+    function zigs() {
+        var pointCount = 80;
+        var points=[];
+        for(i = 0; i < pointCount; i++) {
+          var dy = random(height/120,height/80);
+          //alternate going up and down
+          if( i % 2 == 0) {
+            dy *= -1;
+          }
+          points.push(dy);
+        }
+
+        //now we have our deltas... Let's draw our zags
+        var x1 = margin;
+        var y1 = margin;
+        var x2, y2;
+        while(y1 < height-margin){
+          for(var p = 0; p < points.length; p++) {
+            var dx = width/points.length
+            x1 = p * dx;
+            x2 = x1 + p * dx;
+            y2 = y1 + points[p];
+            line(x1,y2,x2,y2);
+            x1 = x2;
+            y1 = y2;
+          }
+          y1 += height/20; //20 rows?
+        }
+    }
+
     function circlePow() {
       clear();
       background(10);
@@ -816,6 +894,13 @@
     function startClot() {
       //start playing
       clot_counter = 1;
+    }
+
+    function boxPile() {
+      for(var i =0; i < 5; i++) {
+        //rect()....
+        //rotate...
+      }
     }
 
     function clot() {
@@ -916,6 +1001,7 @@
   <a href="javascript: generate('grass')">Grass</a>
   <a href="javascript: generate('vignette')">Vignette</a>
   <a href="javascript: generate('neutrinos')">neutrinos</a>
+  <a href="javascript: generate('boxRoses')">boxRoses</a>
 
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
