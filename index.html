@@ -29,6 +29,9 @@
     var canvas;
     margin = 40; //match document margin
 
+    var minWidthForSVG = 500;//minimum pixels to enable SVG (prevents slow performance on a phone)
+    //probably should do this based on user agent not size...meh.
+
     var foreground_color;
     var background_color;
 
@@ -43,7 +46,7 @@
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
       //if we're probably on a desktop
       //go with SVG
-      if(window.innerWidth > 800) {
+      if(window.innerWidth > minWidthForSVG) {
         canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
       }else {
         //regular canvas (much faster for mobile :)
@@ -285,17 +288,17 @@
     }*/
 
     function keyPressed() {
-      if(window.innerWidth < 800) {
-        alert("Window must be > 800px to capture an SVG");
-        return(false);
-      }
       //alert(keyCode);
       if(keyCode == ENTER) {
+        if(window.innerWidth < minWidthForSVG) {
+          alert("Window must be > " & minWidthForSVG & " to capture an SVG");
+          return(false);
+        }
         //data = canvas.elt.toBlob();
         var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
 
         var blob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-        saveAs(blob, "file.svg");
+        saveAs(blob, "spore" + Date.now + ".svg");
 
         //saveSVG(SVG, "svg","thing");
       }
@@ -392,6 +395,35 @@
         //stroke("#000");
       }
     }
+
+    // a hairball that stays on the screen.
+    function hairball(origX,origY,radius, steps) {
+      //random squiggle
+      // if you're in the "turn back" zone, sample the angle from a wider possible angle
+      //otherwise, stay relatively strait (possible delta angle is smaller)
+
+      //var steps = 900000;
+      strokeWeight(radius/8000);
+      var angle = random(2*PI);
+      var distance = radius/300;
+      var x = origX;
+      var y = origY;
+      for(var i =0; i < steps; i ++) {
+        var x2 = (x + cos(angle) * distance);
+        var y2 = (y + sin(angle) * distance);
+        line(x,y,x2,y2);
+        //are we in the "turnback" zone and heading away from the center?
+        if(dist(origX,origY,x,y) > radius * 0.1 && dist(origX,origY,x2,y2) > dist(origX,origY,x,y)) {
+          angle += random(-PI/8, PI/8);
+        }else{
+          angle += random(-PI/64,PI/64);
+        }
+
+        x = x2;
+        y = y2;
+      }
+    }
+
 
     function cloud(x,y, rad, isFilled) {
       how_many = rando(4,200);
@@ -575,10 +607,11 @@
 
 
     //For Vix & Law
+    /*------------------------------------------------------------------------------------------*/
     function smoothSquig(x,y,steps) {
       var angle = random(2*PI);
       var length = random(width/750,width/500);
-      stroke("#000");
+      stroke("#003");
       var thickness = 0.5;
       for(var i =0; i < steps; i++) {
         var x2 = x + (cos(angle)*length)
@@ -612,8 +645,18 @@
         pop();
     }
 
+    function manchester() {
+      smoothSquig(width/2,height/2, 20000);
+    }
+
+    function greenback() {
+      background("#d0ebdd");
+    }
+    /*------------------------------------------------------------------------------------------*/
+
+
     //small fuzzy cracklybits like dirt
-    function squiggle(x,y,steps) {
+    function crackle(x,y,steps) {
       var dx = width/150
       var dy = height/150
       stroke("#000");
@@ -718,11 +761,8 @@
         }
     }
 
-    function manchester() {
-      smoothSquig(width/2,height/2, 20000);
-    }
-
     function main() {
+      ///hairball(width/2,height/2,width/2,800000);
       //zigs();
       //smoothSquig(width/2,height/2, 20000);
       //grass();
@@ -961,6 +1001,7 @@
         clot();
         clot_counter++;
       }
+
     }
 
     function startClot() {
@@ -1060,7 +1101,7 @@
     }
     </script>
   </head>
-  <body onload="main()" onresize="setup()">
+  <body onload="main()">
   <a href="javascript: generate('city')">City</a>
   <a href="javascript: generate('mountains')">Mtns</a>
   <a href="javascript: generate('stars')">Stars</a>
