@@ -573,6 +573,62 @@
 
     }
 
+
+    //For Vix & Law
+    function smoothSquig(x,y,steps) {
+      var angle = random(2*PI);
+      var length = random(width/750,width/500);
+      stroke("#000");
+      var thickness = 0.5;
+      for(var i =0; i < steps; i++) {
+        var x2 = x + (cos(angle)*length)
+        var y2 = y + (sin(angle)*length)
+        strokeWeight(thickness)
+        line(x,y,x2,y2)
+        //change angle by some small +/- amount
+        angle += random(-PI/4,PI/4);
+        //change length by some small %
+        length *= random(0.99,1.01);
+        thickness *= random(0.95,1.05);
+        x = x2;
+        y = y2;
+        //spin off a spool
+        if(Math.random() > 0.999) {
+          spool(x,y,random(width), random(height/20,height*0.8), thickness, width/20, random(15,80), "#900");
+        }
+      }
+    }
+
+    //viva manchester
+    function spool(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
+        push();
+        strokeWeight(thickness);
+        stroke(daColor);
+        line(originX,originY,x,y);
+        for(var i = 0; i < turns; i++ ) {
+          line(x,y,x + spoolWidth,y+width/80);
+          y += thickness * 2;
+        }
+        pop();
+    }
+
+    //small fuzzy cracklybits like dirt
+    function squiggle(x,y,steps) {
+      var dx = width/150
+      var dy = height/150
+      stroke("#000");
+      strokeWeight(0.05)
+      for(var i =0; i < steps; i++) {
+        var x2 = x + random(-dx,dx);
+        var y2 = y + random(-dy,dy);
+        line(x,y,x2,y2)
+        x = x2
+        y = y2
+      }
+    }
+
+
+
     //boom!
     //TODO: add "baseColor" parameter and do shades of that color...somehow.
     function wreath(){
@@ -662,8 +718,13 @@
         }
     }
 
+    function manchester() {
+      smoothSquig(width/2,height/2, 20000);
+    }
+
     function main() {
       //zigs();
+      //smoothSquig(width/2,height/2, 20000);
       //grass();
       //circlePow();
       //cast(color(180,200,250));
@@ -1014,6 +1075,7 @@
   <a href="javascript: generate('neutrinos')">neutrinos</a>
   <a href="javascript: generate('boxRoses')">boxRoses</a>
   <a href="javascript: generate('zigs')">zigs</a>
+  <a href="javascript: generate('manchester')">Manchester</a>
 
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
