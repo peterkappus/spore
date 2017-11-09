@@ -663,7 +663,7 @@
     }
 
     function main() {
-      zigs();
+      //zigs();
       //grass();
       //circlePow();
       //cast(color(180,200,250));
@@ -792,7 +792,7 @@
         var pointCount = 80;
         var points=[];
         for(i = 0; i < pointCount; i++) {
-          var dy = random(height/20,height/30);
+          var dy = random(height/10,height/50);
           //alternate going up and down
           if( i % 2 == 0) {
             dy *= -1;
@@ -803,25 +803,28 @@
         //now we have our deltas... Let's draw our zags
         //var startY = margin*3;
         var yMargin = margin*3;
-        var rows = 100;
+        var rows = 250;
         var row_height = (height-yMargin-margin)/rows;
-        strokeWeight(width/800);
+        weight = width/1800;
         var x2, y2;
         for(var row = 0; row < rows; row++){
           var x1 = margin;
           var y1 = yMargin + (row * row_height)
           for(var p = 0; p < points.length; p++) {
-            var dx = width/points.length;
+            var dx = (width-(margin*2))/points.length;
             //x1 = margin + p * dx;
             //y1 = margin + (p * )
             x2 = x1 + dx;
             y2 = y1 + points[p];
             debug(points[p]);
-            points[p] *= 0.99;
+            points[p] *= 0.98;
+            strokeWeight(weight);
             line(x1,y1,x2,y2);
             x1 = x2;
             y1 = y2;
           }
+          weight *= 1.01;
+
         }
     }
 
@@ -1010,6 +1013,7 @@
   <a href="javascript: generate('vignette')">Vignette</a>
   <a href="javascript: generate('neutrinos')">neutrinos</a>
   <a href="javascript: generate('boxRoses')">boxRoses</a>
+  <a href="javascript: generate('zigs')">zigs</a>
 
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
