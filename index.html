@@ -403,7 +403,7 @@
       //otherwise, stay relatively strait (possible delta angle is smaller)
 
       //var steps = 900000;
-      strokeWeight(radius/8000);
+      strokeWeight(radius/2000);
       var angle = random(2*PI);
       var distance = radius/300;
       var x = origX;
@@ -1102,22 +1102,12 @@
     </script>
   </head>
   <body onload="main()">
-  <a href="javascript: generate('city')">City</a>
-  <a href="javascript: generate('mountains')">Mtns</a>
-  <a href="javascript: generate('stars')">Stars</a>
-  <a href="javascript: generate('clouds')">Clouds</a>
-  <a href="javascript: generate('haystack')">Haystack</a>
-  <a href="javascript: generate('wreath')">Wreath</a>
-  <a href="javascript: generate('upshot')">Upshot</a>
-  <a href="javascript: generate('circlePow')">Circlepow!</a>
-  <a href="javascript: generate('startClot')">Clot</a>
-  <a href="javascript: generate('grass')">Grass</a>
-  <a href="javascript: generate('vignette')">Vignette</a>
-  <a href="javascript: generate('neutrinos')">neutrinos</a>
-  <a href="javascript: generate('boxRoses')">boxRoses</a>
-  <a href="javascript: generate('zigs')">zigs</a>
-  <a href="javascript: generate('manchester')">Manchester</a>
-
+  <script>
+    funcs = "city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|zigs()|greenback()|manchester()|hairball(width/2,height/2,width/10,800000)".split("|");
+    for(var i in funcs) {
+      document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
+    }
+  </script>
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
     <!--<a href="javascript: save()">Save</a-->
