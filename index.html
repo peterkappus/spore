@@ -413,7 +413,7 @@
         var y2 = (y + sin(angle) * distance);
         line(x,y,x2,y2);
         //are we in the "turnback" zone and heading away from the center?
-        if(dist(origX,origY,x,y) > radius * 0.1 && dist(origX,origY,x2,y2) > dist(origX,origY,x,y)) {
+        if(timeToTurnBack(origX,origY,radius * 0.1, x,y,x2,y2)) {
           angle += random(-PI/8, PI/8);
         }else{
           angle += random(-PI/64,PI/64);
@@ -424,6 +424,10 @@
       }
     }
 
+    //if we're more than maxDistance away from origin and our next point is even further away... then it's time to head back to the middle.
+    function timeToTurnBack(origX,origY,maxDistance,x,y,nextX,nextY) {
+      return(dist(origX,origY,x,y) > maxDistance && dist(origX,origY,nextX,nextY) > dist(origX,origY,x,y));
+    }
 
     function cloud(x,y, rad, isFilled) {
       how_many = rando(4,200);
@@ -608,11 +612,13 @@
 
     //For Vix & Law
     /*------------------------------------------------------------------------------------------*/
-    function smoothSquig(x,y,steps) {
+    function smoothSquig(origX,origY,steps) {
       var angle = random(2*PI);
       var length = random(width/750,width/500);
-      stroke("#003");
+      stroke("#0E3A53");
       var thickness = 0.5;
+      var x = origX;
+      var y = origY;
       for(var i =0; i < steps; i++) {
         var x2 = x + (cos(angle)*length)
         var y2 = y + (sin(angle)*length)
@@ -620,14 +626,22 @@
         line(x,y,x2,y2)
         //change angle by some small +/- amount
         angle += random(-PI/4,PI/4);
+        //bigger angle change if we're near the edge (e.g. go back)
+        if(timeToTurnBack(origX,origY,width*0.5,x,y,x2,y2)) {
+          angle += random(-PI,PI);
+        }
+
         //change length by some small %
-        length *= random(0.99,1.01);
-        thickness *= random(0.95,1.05);
+        //length *= random(0.99,1.01);
+        length = width/800 * noise(i*0.005);
+        //thickness *= randomGaussian(1,0.2);
+        //thickness *= random(0.95,1.05)// * width/20000;
+        thickness = width/35000 * (100*noise(i*0.008));
         x = x2;
         y = y2;
         //spin off a spool
-        if(Math.random() > 0.999) {
-          spool(x,y,random(width), random(height/20,height*0.8), thickness, width/20, random(15,80), "#900");
+        if(Math.random() > 0.9995) {
+          spool(x,y,x+random(-width/10,width/10), y + random(-height/10,height/10), thickness, width/20, random(25,60), "#EB3C27");
         }
       }
     }
@@ -637,11 +651,17 @@
         push();
         strokeWeight(thickness);
         stroke(daColor);
-        line(originX,originY,x,y);
-        for(var i = 0; i < turns; i++ ) {
-          line(x,y,x + spoolWidth,y+width/80);
-          y += thickness * 2;
+        var spoolHeight = spoolWidth * 0.3;
+        var offset = spoolWidth/2 * ((x - originX)/Math.abs(x - originX));
+        for(var i = turns; i > 0; i-- ) {
+          //line(x,y,x + spoolWidth,y+width/80);
+          //arc(x,y,spoolWidth,width/80,PI/2,PI*1.8,OPEN);
+          //fill("#783937");
+          fill("#EAD94E");
+          ellipse(x+offset,y + (i * thickness * 2),spoolWidth,spoolHeight);
         }
+        line(originX,originY,x,y);
+
         pop();
     }
 
@@ -650,16 +670,21 @@
     }
 
     function greenback() {
-      background("#d0ebdd");
+      //background("#d0ebdd");
+      background("#AACA97");
     }
     /*------------------------------------------------------------------------------------------*/
 
+    function goCrackle() {
+      var daColor = random(["#fff","#000"]);
+      crackle(random(width),random(height),random(200,10000),daColor);
+    }
 
     //small fuzzy cracklybits like dirt
-    function crackle(x,y,steps) {
+    function crackle(x,y,steps,daColor) {
       var dx = width/150
       var dy = height/150
-      stroke("#000");
+      stroke(daColor);
       strokeWeight(0.05)
       for(var i =0; i < steps; i++) {
         var x2 = x + random(-dx,dx);
@@ -889,8 +914,25 @@
       }
     }
 
-    function zigs() {
-        var pointCount = 80;
+    function getPalette(keyword, callback) {
+      loadJSON("http://www.colourlovers.com/api/palettes/top?jsonCallback=blah&keywords=" + keyword + "&format=json", function(data){
+        debug(data);
+      });
+
+    }
+
+    function goZigs() {
+      //['#000','#fc0','#f09']
+      getPalette("courage", function(palette) {
+          //zigs(width/20,30,50,palette);
+        }
+      );
+    }
+
+    function zigs(thickness, cols, rows, colors) {
+      push();
+        strokeCap(PROJECT);
+        var pointCount = cols;
         var points=[];
         for(i = 0; i < pointCount; i++) {
           var dy = random(height/10,height/50);
@@ -903,23 +945,27 @@
 
         //now we have our deltas... Let's draw our zags
         //var startY = margin*3;
-        var yMargin = margin*3;
-        var rows = 250;
+        var yMargin = margin * 3;
         var row_height = (height-yMargin-margin)/rows;
-        weight = width/1800;
+        weight = thickness;
         var x2, y2;
         for(var row = 0; row < rows; row++){
           var x1 = margin;
           var y1 = yMargin + (row * row_height)
+
+          var c = colors[Math.floor(random(colors.length))];
+          debug(c);
+          stroke(c);
+          strokeWeight(weight);
+
           for(var p = 0; p < points.length; p++) {
             var dx = (width-(margin*2))/points.length;
             //x1 = margin + p * dx;
             //y1 = margin + (p * )
             x2 = x1 + dx;
             y2 = y1 + points[p];
-            debug(points[p]);
+            //debug(points[p]);
             points[p] *= 0.98;
-            strokeWeight(weight);
             line(x1,y1,x2,y2);
             x1 = x2;
             y1 = y2;
@@ -927,6 +973,7 @@
           weight *= 1.01;
 
         }
+        pop();
     }
 
     function circlePow() {
@@ -1041,10 +1088,9 @@
         line(x,y,x2,y2);
         x = x2;
         y = y2;
-
       }
-
     }
+
 
     function neutrinos (){
       var x1 = random(margin, width-margin);
@@ -1103,7 +1149,7 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|zigs()|greenback()|manchester()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
