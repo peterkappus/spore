@@ -23,6 +23,7 @@
     <script src="p5.min.js"></script>
     <script src="mountains.js"></script>
     <script src="circlepow.js"></script>
+    <script src="manchester.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
     <script src="p5.svg.js"></script>
     <script src="file_saver.js"></script>
@@ -540,70 +541,12 @@
 
     }
 
-
-    //For Vix & Law
-    /*------------------------------------------------------------------------------------------*/
-    function smoothSquig(origX,origY,steps) {
-      var angle = random(2*PI);
-      var length = random(width/750,width/500);
-      stroke("#0E3A53");
-      var thickness = 0.5;
-      var x = origX;
-      var y = origY;
-      for(var i =0; i < steps; i++) {
-        var x2 = x + (cos(angle)*length)
-        var y2 = y + (sin(angle)*length)
-        strokeWeight(thickness)
-        line(x,y,x2,y2)
-        //change angle by some small +/- amount
-        angle += random(-PI/4,PI/4);
-        //bigger angle change if we're near the edge (e.g. go back)
-        if(timeToTurnBack(origX,origY,width*0.7,x,y,x2,y2)) {
-          angle += random(-PI,PI);
-        }
-
-        //change length by some small %
-        //length *= random(0.99,1.01);
-        length = width/800 * noise(i*0.005);
-        //thickness *= randomGaussian(1,0.2);
-        //thickness *= random(0.95,1.05)// * width/20000;
-        thickness = width/35000 * (100*noise(i*0.008));
-        x = x2;
-        y = y2;
-        //spin off a spool
-        if(Math.random() > 0.9995) {
-          spool(x,y,x+random(-width/10,width/10), y + random(-height/10,height/10), thickness, random(width/30,width/15), random(25,60), "#EB3C27");
-        }
-      }
-    }
-
-    //viva manchester
-    function spool(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
-        push();
-        strokeWeight(thickness);
-        stroke(daColor);
-        var spoolHeight = spoolWidth * 0.3;
-        var offset = spoolWidth/2 * ((x - originX)/Math.abs(x - originX));
-        for(var i = turns; i > 0; i-- ) {
-          var yOffset = (i * thickness * 2);
-          line(x,y + yOffset,x + spoolWidth,y+yOffset+spoolHeight);
-          //arc(x,y,spoolWidth,width/80,PI/2,PI*1.8,OPEN);
-          //fill("#783937");
-          fill("#EAD94E");
-          //ellipse(x+offset,y + (i * thickness * 2),spoolWidth,spoolHeight);
-        }
-        line(originX,originY,x,y);
-
-        pop();
-    }
-
-    function manchester() {
-      smoothSquig(width/2,height/2, 20000);
-    }
-
     function greenback() {
       //background("#d0ebdd");
-      background("#AACA97");
+      //var lightGreen = lerpColor("#AACA97","#fff",0.3);
+      //background(lightGreen);
+      background("#e7f1ab");
+      //background("#AACA97");
     }
     /*------------------------------------------------------------------------------------------*/
 
