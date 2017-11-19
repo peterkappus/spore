@@ -58,6 +58,7 @@
       //createCanvas(600, 200, SVG); // Create SVG Canvas
 
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
+      frameRate(100);
     }
 
     function grid(margin,w,h) {
@@ -776,10 +777,48 @@
     }
 
     var clot_counter = 0;
+    var squigCounter = 0;
+    var x;//width/2;
+    var y;// = height/2;
+    var angle;// = random(2*PI);
+    var length;// = random(width/750,width/500);
+    var thickness;// = 0.5;
+    var origX;// = x;
+    var origY;// = y;
+    var radius;// = width/3;
+
     function draw() {
+
       if(clot_counter > 0 && clot_counter <= 50) {
         clot();
         clot_counter++;
+      }
+
+      stroke("#000");
+      if(squigCounter > 0 && squigCounter <= 20000)
+      {
+        squigCounter++;
+    //    console.log(squigCounter);
+        var x2 = x + (cos(angle)*length)
+        var y2 = y + (sin(angle)*length)
+        strokeWeight(thickness)
+        line(x,y,x2,y2)
+        //change angle by some small +/- amount
+        var amt = PI/4 * noise(squigCounter*0.005);
+        angle += random(-amt,amt);
+        //bigger angle change if we're near the edge (e.g. go back)
+        if(timeToTurnBack(origX,origY,radius,x,y,x2,y2)) {
+          angle += PI * noise(squigCounter*0.005);
+        }
+
+        //change length by some small %
+        //length *= random(0.99,1.01);
+        length = width*0.005 * noise(squigCounter*0.005);
+        //thickness *= randomGaussian(1,0.2);
+        //thickness *= random(0.95,1.05)// * width/20000;
+        thickness = width/5000 * (80*noise(squigCounter*0.008));
+        x = x2;
+        y = y2;
       }
 
     }
@@ -882,7 +921,7 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }

@@ -1,4 +1,17 @@
 
+window.brain = function() {
+  squigCounter = 1;
+  x = width/2;
+  y = height/2;
+  angle = random(2*PI);
+  //length = width/5; //random(width/50,width/500);
+  thickness = 0.5;
+  origX = x;
+  origY = y;
+  radius = width/3;
+//  smoothSquig(width/2,height/2, 200000, width/3, "#003");
+}
+
 
 //For Vix & Law
 /*------------------------------------------------------------------------------------------*/
@@ -36,27 +49,41 @@ window.smoothSquig = function(origX,origY,steps,radius,daColor) {
     }
     */
 
+    //save these to return to the caller for making spools, etc.
+    var result = new Object();
+    result.thickness = thickness;
+    result.x = x;
+    result.y = y;
   }
+
+  //send back a result object with some useful properties.
+  return(result);
 }
 
 //viva manchester
 window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
-    push();
-    strokeWeight(thickness);
-    stroke(daColor);
-    var spoolHeight = spoolWidth * 0.3;
-    var offset = spoolWidth/2 * ((x - originX)/Math.abs(x - originX));
-    for(var i = turns; i > 0; i-- ) {
-      var yOffset = (i * thickness * 2);
-      line(x,y + yOffset,x + spoolWidth,y+yOffset+spoolHeight);
-      //arc(x,y,spoolWidth,width/80,PI/2,PI*1.8,OPEN);
-      //fill("#783937");
-      fill("#EAD94E");
-      //ellipse(x+offset,y + (i * thickness * 2),spoolWidth,spoolHeight);
+  push();
+  stroke(daColor);
+  var spoolHeight = spoolWidth * 0.3;
+  var offset = spoolWidth/2 * ((x - originX)/Math.abs(x - originX));
+  var fatness = thickness;
+  strokeWeight(fatness);
+  line(originX,originY,x,y);
+  for(var i = 0; i < turns; i++ ) {
+    strokeWeight(fatness);
+    //get fatter as we go down
+    fatness *= 1.05;
+    var yOffset = i * fatness*1.001;// + (i * fatness * 1.5);
+    line(x,y + yOffset,x + spoolWidth,y+yOffset+spoolHeight);
+    //arc(x,y,spoolWidth,width/80,PI/2,PI*1.8,OPEN);
+    //fill("#783937");
+    fill("#EAD94E");
+    //ellipse(x+offset,y + (i * thickness * 2),spoolWidth,spoolHeight);
+    if(y+yOffset+spoolHeight > height-margin*2) {
+      break;
     }
-    line(originX,originY,x,y);
-
-    pop();
+  }
+  pop();
 }
 
 window.manchester = function() {
@@ -71,7 +98,7 @@ window.manchester = function() {
     var radius = cellWidth*0.6 // radius is less than half cell width so we have some margin.
     var cx = margin + (cellWidth / 2) + (i * cellWidth);
     var cy = margin*2 + (radius);
-    smoothSquig(cx,cy, random(30000,130000), radius, daColor);
+    var result = smoothSquig(cx,cy, random(8000,50000), radius, daColor);
 
     //draw the "gates" that allow the thread through
     var thickness = width / 120;
@@ -80,17 +107,29 @@ window.manchester = function() {
     stroke("#783937");
     strokeWeight(thickness);
     var gateEndX = cx + cellWidth - (gapWidth/2);
+
     //if we're on the last one...
     if(gateEndX > width) {
+
       //make it shorter so it doesn't run off the canvas
       gateEndX = cx + cellWidth/2 - (gapWidth/2);
+
       //and draw the short one on the left, too...
       line(margin, gateY, margin + cellWidth/2 - (gapWidth/2) ,gateY);
     }
+
+    //draw the gate
     line(cx + (gapWidth/2), gateY, gateEndX ,gateY);
 
+    //line down to the spools
+    push();
+    stroke(daColor);
+    strokeWeight(result.thickness);
+    line(result.x,result.y,cx, gateY);
+    pop();
+
+    //spool beneath
+    spool(cx,gateY, cx-radius/2, gateY + radius, result.thickness, radius*1.5, 48, daColor);
+    //window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
   }
-
-  //gates
-
 }
