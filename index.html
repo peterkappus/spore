@@ -24,6 +24,8 @@
     <script src="mountains.js"></script>
     <script src="circlepow.js"></script>
     <script src="manchester.js"></script>
+    <script src="rainbrick.js"></script>
+    <script src="utils.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
     <script src="p5.svg.js"></script>
     <script src="file_saver.js"></script>
@@ -58,7 +60,7 @@
       //createCanvas(600, 200, SVG); // Create SVG Canvas
 
       //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
-      frameRate(100);
+      frameRate(80);
     }
 
     function grid(margin,w,h) {
@@ -464,9 +466,7 @@
   */
 
 
-    function randColor() {
-      return(color(random(255),random(255),random(255)));
-    }
+
     function clouds() {
       //clear();
       //randomInvert();
@@ -689,25 +689,32 @@
       //clouds();
     }
 
+    function parsePalette(data) {
+      //debug(data[random(data.length)]['colors']);
+      //debug(random(data.length));
+      var palette = data[Math.floor(random(data.length))]['colors'];
+      zigs(width/200,30,200,palette);
+    }
 
-    function getPalette(keyword, callback) {
-      loadJSON("http://www.colourlovers.com/api/palettes/top?jsonCallback=blah&keywords=" + keyword + "&format=json", function(data){
-        debug(data);
-      });
+    function getPalette(keywords, callback) {
+      loadJSON("http://www.colourlovers.com/api/palettes/top?format=json&jsonCallback=parsePalette&keywords=" + keywords,"jsonp");
+      /*loadJSON("http://www.colourlovers.com/api/palettes/top",{
+        jsonCallback: 'alert',
+        format: 'json'
+      },"jsonp",'alert');*/
 
     }
 
     function goZigs() {
       //['#000','#fc0','#f09']
-      getPalette("courage", function(palette) {
-          //zigs(width/20,30,50,palette);
-        }
-      );
+      getPalette(random("play ocean mystery funk childhood fun joy colorful wild".split(" ")));
+      //zigs(width/20,30,50,["#fc0","#000"]);
+
     }
 
     function zigs(thickness, cols, rows, colors) {
       push();
-        strokeCap(PROJECT);
+        strokeCap(ROUND);
         var pointCount = cols;
         var points=[];
         for(i = 0; i < pointCount; i++) {
@@ -730,6 +737,10 @@
           var y1 = yMargin + (row * row_height)
 
           var c = colors[Math.floor(random(colors.length))];
+          if(!c.match(/^#/)) {
+            c = "#" + c
+          }
+
           debug(c);
           stroke(c);
           strokeWeight(weight);
@@ -776,6 +787,7 @@
       }
     }
 
+    //TODO: put this somewhere mo betta.
     var clot_counter = 0;
     var squigCounter = 0;
     var x;//width/2;
@@ -787,6 +799,8 @@
     var origY;// = y;
     var radius;// = width/3;
 
+    //main draw method
+    // TODO: make this more OO
     function draw() {
 
       if(clot_counter > 0 && clot_counter <= 50) {
@@ -794,15 +808,16 @@
         clot_counter++;
       }
 
-      stroke("#000");
       if(squigCounter > 0 && squigCounter <= 20000)
       {
+        stroke("#000");
         squigCounter++;
     //    console.log(squigCounter);
         var x2 = x + (cos(angle)*length)
         var y2 = y + (sin(angle)*length)
         strokeWeight(thickness)
-        line(x,y,x2,y2)
+        //line(x,y,x2,y2)
+        ellipse(x,y,thickness)
         //change angle by some small +/- amount
         var amt = PI/4 * noise(squigCounter*0.005);
         angle += random(-amt,amt);
@@ -819,6 +834,12 @@
         thickness = width/5000 * (80*noise(squigCounter*0.008));
         x = x2;
         y = y2;
+
+        if(squigCounter % 100 == 0) {
+          console.log(squigCounter);
+          //debug(thickness);
+          debug(x);
+        }
       }
 
     }
@@ -902,20 +923,6 @@
       getY() {
         return this.y;
       }
-    }
-    function getRandPointOnLine(x1,y1,x2,y2) {
-      var dx = x2 - x1;
-      var dy = y2 - y1;
-      var distance = dist(x1,y1,x2,y2); //same as Math.hypot?
-      var distance2 = Math.random() * distance;
-      var freshX = x1 + ((distance2/distance) * dx);
-      var freshY = y1 + ((distance2/distance) * dy);
-      return(new Point(freshX,freshY));
-
-      //a^2 + b^2 = c^2
-      //hyp = sqrt((x1-x2)^2 + (y2 - y1)^2))
-      //x1
-
     }
     </script>
   </head>
