@@ -224,7 +224,8 @@
 
     function keyPressed() {
       //alert(keyCode);
-      if(keyCode == ENTER) {
+      if(keyCode == 68) {
+
         if(window.innerWidth < minWidthForSVG) {
           alert("Window must be > " & minWidthForSVG & " to capture an SVG");
           return(false);
@@ -544,15 +545,18 @@
 
     function greenback() {
       //background("#d0ebdd");
-      //var lightGreen = lerpColor("#AACA97","#fff",0.3);
-      //background(lightGreen);
-      background("#e7f1ab");
+      var green = color(200,250,210,255);
+      var white = color(255,255,255,255);
+      var black = color(0,0,0,255);
+      var lightGreen = lerpColor(green,black,0.4);
+      background(lightGreen);
+      //background("#e7f1ab");
       //background("#AACA97");
     }
     /*------------------------------------------------------------------------------------------*/
 
     function goCrackle() {
-      var daColor = random(["#fff","#000"]);
+      var daColor = random(["#300","#000"]);
       crackle(random(width),random(height),random(200,10000),daColor);
     }
 
@@ -928,7 +932,7 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }

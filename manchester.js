@@ -69,17 +69,38 @@ window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daCo
   var fatness = thickness;
   strokeWeight(fatness);
   line(originX,originY,x,y);
+
+  //flip it over if it's above the fold
+  if(originY < height/2) {
+    var yDirection = -1;
+  } else {
+    var yDirection = 1;
+  }
+
+  //flip it over if on the left
+  if(originX < width/2) {
+    var xDirection = -1;
+    //var yOffset = yDirection * fatness*1.001;// + (i * fatness * 1.5);
+    x += xDirection * spoolWidth;
+    y += xDirection * spoolHeight;
+  }
+
+
+
   for(var i = 0; i < turns; i++ ) {
     strokeWeight(fatness);
     //get fatter as we go down
     fatness *= 1.05;
-    var yOffset = i * fatness*1.001;// + (i * fatness * 1.5);
-    line(x,y + yOffset,x + spoolWidth,y+yOffset+spoolHeight);
+
+    var yOffset = yDirection * i * fatness*1.001;// + (i * fatness * 1.5);
+    stroke(lerpColor(color(0,0,0,255),color(200,0,0,255),i/turns));
+    line(x,y + yOffset, x + spoolWidth, y + yOffset + spoolHeight);
     //arc(x,y,spoolWidth,width/80,PI/2,PI*1.8,OPEN);
     //fill("#783937");
-    fill("#EAD94E");
+    //fill("#EAD94E");
     //ellipse(x+offset,y + (i * thickness * 2),spoolWidth,spoolHeight);
-    if(y+yOffset+spoolHeight > height-margin*2) {
+    //break before we hit the top or bottom
+    if(y+yOffset+spoolHeight < margin*2 || y+yOffset+spoolHeight > height-margin*2) {
       break;
     }
   }
@@ -131,5 +152,38 @@ window.manchester = function() {
     //spool beneath
     spool(cx,gateY, cx-radius/2, gateY + radius, result.thickness, radius*1.5, 48, daColor);
     //window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
+  }
+}
+
+window.dreamcatcher = function() {//function(x,y,rad,count,color,thickness) {
+  var x = width/2;
+  var y = height/2;
+  var count = 1293; //Law has 1293 followers :)
+  var rad = width*0.25;
+  stroke("#000");
+  var thickness = width/2000;
+  strokeWeight(thickness);
+  var hole_size = 0.5 //% of rad
+  var wildness = random([0.65,0.98,0.8]);
+  for(i = 0; i < count; i++) {
+    var angle = random(2*PI)
+    var x1 = x + sin(angle)*rad;
+    var y1 = y + cos(angle)*rad;
+    var angle2 = angle + random(-PI*(1-hole_size/2), PI*(1-hole_size/2));
+    var x2 = x + sin(angle2)*rad;
+    var y2 = y + cos(angle2)*rad;
+
+    line(x1,y1,x2,y2);
+    if(random(1) > wildness) {
+      /*var point = getRandPointOnLine(x1,y1,x2,y2);
+      //debug(point.getY());
+      x2 = point.getX();
+      y2 = point.getY();
+      */
+      var x3 = x + sin(angle2) * rad * random(1.1,1.75);
+      var y3 = y + cos(angle2) * rad * random(1.1,1.75);
+      spool(x2,y2,x3,y3,thickness * 1.2 ,  width/random(15,40), random(10,40), "#000");
+    }//spool(x2,y2,))
+    //originX, originY, x,y,thickness, spoolWidth, turns, daColor
   }
 }
