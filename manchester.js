@@ -108,7 +108,7 @@ window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daCo
 }
 
 window.manchester = function() {
-  var clumpCount = 5;
+  var clumpCount = 10;
   var margin = width/30;
   var colors = "#0E3A53 #EB3C27 #3267AD #EAD94E".split(" ");
 
@@ -150,7 +150,7 @@ window.manchester = function() {
     pop();
 
     //spool beneath
-    spool(cx,gateY, cx-radius/2, gateY + radius, result.thickness, radius*1.5, 48, daColor);
+    //spool(cx,gateY, cx-radius/2, gateY + radius, result.thickness, radius*1.5, 48, daColor);
     //window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daColor) {
   }
 }

@@ -9,12 +9,12 @@
       a {
         display: inline-block;
         background: #333;
-        padding: 1rem 2rem;
+        padding: 1rem 1.5rem;
         color: #fff;
         text-align: center;
         text-decoration: none;
-        margin: 5px 5px 20px 0;
-        font-size: 1.5rem;
+        margin: 5px 5px 10px 0;
+        font-size: 1.2rem;
         }
       a:hover {
         background: #666;
@@ -26,6 +26,7 @@
     <script src="manchester.js"></script>
     <script src="rainbrick.js"></script>
     <script src="utils.js"></script>
+    <script src="sunsets.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
     <script src="p5.svg.js"></script>
     <script src="file_saver.js"></script>
@@ -704,7 +705,7 @@
     function getPalette(keywords, callback) {
       loadJSON("http://www.colourlovers.com/api/palettes/top?format=json&jsonCallback=parsePalette&keywords=" + keywords,"jsonp");
       /*loadJSON("http://www.colourlovers.com/api/palettes/top",{
-        jsonCallback: 'alert',
+       onCallback: 'alert',
         format: 'json'
       },"jsonp",'alert');*/
 
@@ -833,7 +834,7 @@
 
         //change length by some small %
         //length *= random(0.99,1.01);
-        length = width*0.005 * noise(squigCounter*0.005);
+        length = width*0.008 * noise(squigCounter*0.008);
         //thickness *= randomGaussian(1,0.2);
         //thickness *= random(0.95,1.05)// * width/20000;
         thickness = width/5000 * (80*noise(squigCounter*0.008));
@@ -933,7 +934,7 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|sunset()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
