@@ -544,6 +544,29 @@
 
     }
 
+    function greenTest() {
+      //background("#d0ebdd");
+      var green = color(200,250,210,255);
+      var white = color(255,255,255,255);
+      var black = color(0,0,0,255);
+      var a = [];
+      //a.push(lerpColor(green,black,0.1));
+      a.push(lerpColor(green,black,0.2));
+      a.push(lerpColor(green,black,0.3));
+      a.push(lerpColor(green,black,0.4));
+      a.push(lerpColor(green,black,0.5));
+      a.push(lerpColor(green,black,0.6));
+
+      var x = 0;
+      noStroke();
+      for(i in a) {
+        fill(a[i]);
+        rect(i*(width/a.length),0,width/a.length,height);
+        //fill("#000");
+        //text(a[i].toString(), (width/a.length/3) + i*(width/a.length), height * 0.95);
+      }
+    }
+
     function greenback() {
       //background("#d0ebdd");
       var green = color(200,250,210,255);
@@ -934,7 +957,7 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|sunset()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|sunset()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
