@@ -3,6 +3,25 @@ window.randColor = function() {
   return(color(random(255),random(255),random(255)));
 }
 
+//dervied from https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery
+window.copyTextToClipboard = function(text) {
+    var temp = $("<input>");
+    $("body").append(temp);
+    temp.val(text).select();
+    document.execCommand("copy");
+    temp.remove();
+}
+
+window.rgbToHex = function(c) {
+  return('#'+('000000'+(c._getRed()<<16|c._getGreen()<<8|c._getBlue()).toString(16)).slice(-6)); // r, g, and b are ints 0..255
+
+}
+
+window.roundRand = function(min,max) {
+  //round to two decimal places
+  return(Math.round(random(min,max)*100)/100);
+}
+
 window.getRandPointOnLine = function(x1,y1,x2,y2) {
   var dx = x2 - x1;
   var dy = y2 - y1;

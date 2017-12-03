@@ -21,6 +21,7 @@
       }
     </style>
     <script src="p5.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script src="mountains.js"></script>
     <script src="circlepow.js"></script>
     <script src="manchester.js"></script>
@@ -957,11 +958,14 @@
   </head>
   <body onload="main()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|sunset()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)|sunset()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
   </script>
+
+  <span id="placeholder">ok</span>
+
   <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
   <br>
     <!--<a href="javascript: save()">Save</a-->
