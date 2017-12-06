@@ -48,7 +48,7 @@ window.sunset = function(skyColor,sunColor,xSun,ySun,sunDiam,landColor,yLandStar
 }
 
 window.retreiveSunset = function() {
-  var string = prompt("whut?");
+  var string = prompt("Paste your param string [xxx]:");
   var paramArray = string.match(/\[(.+?)\]/)[1].split(",");
   sunset(paramArray[0],paramArray[1],paramArray[2],paramArray[3],paramArray[4],paramArray[5],paramArray[6],paramArray[7]);
 }
