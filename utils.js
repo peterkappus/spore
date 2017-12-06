@@ -1,4 +1,5 @@
 
+
 window.randColor = function() {
   return(color(random(255),random(255),random(255)));
 }
@@ -6,9 +7,11 @@ window.randColor = function() {
 //dervied from https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery
 window.copyTextToClipboard = function(text) {
     var temp = $("<input>");
-    $("body").append(temp);
+    $("body").append(temp)//.css("width","100%");
     temp.val(text).select();
+    //$("#data").val(text).select();
     document.execCommand("copy");
+    //$("#data").val(text).blur();
     temp.remove();
 }
 

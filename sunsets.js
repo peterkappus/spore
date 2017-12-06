@@ -1,7 +1,5 @@
 window.randomSunset = function() {
-
   //set variables
-
   //skycolor
   var skyColor = randColor();
 
@@ -9,7 +7,7 @@ window.randomSunset = function() {
   var sunColor = randColor();
   var xSun = roundRand(0,1);
   var ySun = roundRand(0,0.5);
-  var sunDiam = roundRand(1/15,1/2);
+  var sunDiam = roundRand(1/15,1);
 
   //land
   var landColor = randColor();
@@ -17,14 +15,15 @@ window.randomSunset = function() {
   var yLandEnd = roundRand(0.1,0.9);
 
   //copy to clipboard:
-  var data = "Make your own: [" +  [rgbToHex(skyColor),rgbToHex(sunColor),xSun,ySun,sunDiam,rgbToHex(landColor),yLandStart,yLandEnd].join(",") + "]";
-  $("#placeholder").text(data);
-  copyTextToClipboard(data);
+  var data = "DIY: [" +  [rgbToHex(skyColor),rgbToHex(sunColor),xSun,ySun,sunDiam,rgbToHex(landColor),yLandStart,yLandEnd].join(",") + "] #sunset #abstractart #modernart #hardedge #colorful #bright #vibrant #shapes #sun #moon #minimal #geometric #contemporaryart #instaart#landscape#beautiful#horizon#sky#evening#dawn#artoftheday#poster#dailyart#circle";
+  $("#placeholder").val(data);
+  $("#placeholder").select();
+  //$("#placeholder").selectionStart=0;
+  //$("#placeholder").selectionEnd=$("#placeholder").value.length;
+  //copyTextToClipboard(data);
 
   //draw!
   sunset(skyColor,sunColor,xSun,ySun,sunDiam,landColor,yLandStart,yLandEnd);
-
-
 }
 
 window.sunset = function(skyColor,sunColor,xSun,ySun,sunDiam,landColor,yLandStart,yLandEnd) {
@@ -48,9 +47,8 @@ window.sunset = function(skyColor,sunColor,xSun,ySun,sunDiam,landColor,yLandStar
   endShape(CLOSE);
 }
 
-
-window.createFromParams = function() {
-  //open an input popup
-  //parse and create a new sunset
-
+window.retreiveSunset = function() {
+  var string = prompt("whut?");
+  var paramArray = string.match(/\[(.+?)\]/)[1].split(",");
+  sunset(paramArray[0],paramArray[1],paramArray[2],paramArray[3],paramArray[4],paramArray[5],paramArray[6],paramArray[7]);
 }
