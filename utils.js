@@ -5,6 +5,7 @@ window.randColor = function() {
 }
 
 //dervied from https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery
+/*
 window.copyTextToClipboard = function(text) {
     var temp = $("<input>");
     $("body").append(temp)//.css("width","100%");
@@ -14,10 +15,10 @@ window.copyTextToClipboard = function(text) {
     //$("#data").val(text).blur();
     temp.remove();
 }
+*/
 
 window.rgbToHex = function(c) {
   return('#'+('000000'+(c._getRed()<<16|c._getGreen()<<8|c._getBlue()).toString(16)).slice(-6)); // r, g, and b are ints 0..255
-
 }
 
 window.roundRand = function(min,max) {

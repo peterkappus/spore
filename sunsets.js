@@ -17,7 +17,7 @@ window.randomSunset = function() {
   //copy to clipboard:
   var data = "DIY: [" +  [rgbToHex(skyColor),rgbToHex(sunColor),xSun,ySun,sunDiam,rgbToHex(landColor),yLandStart,yLandEnd].join(",") + "] #sunset #abstractart #modernart #hardedge #colorful #bright #vibrant #shapes #sun #moon #minimal #geometric #contemporaryart #instaart#landscape#beautiful#horizon#sky#evening#dawn#artoftheday#poster#dailyart#circle";
   $("#placeholder").val(data);
-  $("#placeholder").select();
+  //$("#placeholder").select();
   //$("#placeholder").selectionStart=0;
   //$("#placeholder").selectionEnd=$("#placeholder").value.length;
   //copyTextToClipboard(data);

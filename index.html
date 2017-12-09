@@ -22,6 +22,7 @@
       }
     </style>
     <script src="p5.min.js"></script>
+    <script src="clipboard.min.js"></script>
     <script src="jquery.min.js"></script>
     <script src="mountains.js"></script>
     <script src="circlepow.js"></script>
@@ -963,11 +964,16 @@
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
-  </script>
 
-  <!--a href="javascript: generate('hydroVents')">hydroVents</a-->
-  <br>
+
+    //initialise clipboard
+    new Clipboard('.btn');
+  </script>
     <!--<a href="javascript: save()">Save</a-->
-    <textarea id="placeholder"/></textarea>
+    <input id="placeholder"/></input>
+    <!-- Trigger -->
+    <button class="btn" data-clipboard-target="#placeholder">
+      Copy
+    </button>
   </body>
 </html>
