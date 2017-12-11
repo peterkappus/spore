@@ -4,6 +4,16 @@ window.randColor = function() {
   return(color(random(255),random(255),random(255)));
 }
 
+window.shuffle = function(a) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+  }
+}
+
 //dervied from https://stackoverflow.com/questions/22581345/click-button-copy-to-clipboard-using-jquery
 /*
 window.copyTextToClipboard = function(text) {

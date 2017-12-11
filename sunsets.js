@@ -1,4 +1,5 @@
-window.randomSunset = function() {
+window.randomSunset = function(paletteString = "") {
+  debug(paletteString.length);
   //set variables
   //skycolor
   var skyColor = randColor();
@@ -21,6 +22,17 @@ window.randomSunset = function() {
   //$("#placeholder").selectionStart=0;
   //$("#placeholder").selectionEnd=$("#placeholder").value.length;
   //copyTextToClipboard(data);
+
+  //with myles
+  //var yeah = paletteString.length > 0;
+
+  if(paletteString.length > 0) {
+    var daColors = shuffle(paletteString.split(" "));
+    debug(daColors.pop());
+    skyColor = daColors.pop();
+    sunColor = daColors.pop();
+    landColor = daColors.pop();
+  }
 
   //draw!
   sunset(skyColor,sunColor,xSun,ySun,sunDiam,landColor,yLandStart,yLandEnd);
