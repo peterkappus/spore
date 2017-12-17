@@ -1,2 +1,3 @@
 .gitconfig
 deploy.sh
+*.DS*
