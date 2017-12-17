@@ -612,48 +612,6 @@ function generate(whichOne) {
   lastFuncString = whichOne;
 }
 
-function boxRose(x,y,minRad,maxRad) {
-  var howMany = 100;
-  fill(foreground_color._getRed(),foreground_color._getGreen(),foreground_color._getBlue(),30);
-  noStroke();
-  push();
-
-  translate(x,y);
-  for(var i = 0; i < howMany; i++) {
-    //angleMode(RADIANS);
-    rotate(2*PI/howMany);
-    rect(0,0,random(minRad,maxRad),random(minRad,maxRad));
-    //rect(0,0,100,250);
-  }
-
-  pop();
-
-  /*
-  push();
-    translate(width/2,height/2);
-    var howMany = 600;
-    noFill();
-  for(var i = 0; i < howMany; i++) {
-    rect(0,0,1*i,1.3*i);
-    rotate(2*PI/howMany);
-    strokeWeight(0.001*i);
-
-  }
-  pop();
-  */
-}
-
-function boxRoses() {
-  foreground_color = color(0,0,0);
-  var howMany = random(1,5);
-  for(var i = 0; i < howMany; i++) {
-    //foreground_color = randColor();
-    var minRad = width/random(10,80);
-    var maxRad = width/random(2,10);
-    boxRose(random(margin,width-margin), random(margin, height-margin),minRad,maxRad);
-  }
-}
-
 function texture() {
     for(var i = 0; i < 800; i++){
       strokeWeight(random(width/80,))
@@ -759,30 +717,6 @@ function zigs(thickness, cols, rows, colors) {
 
     }
     pop();
-}
-
-
-function grass() {
-  var x = margin;
-  stroke("#000");
-  var scale = height/3;
-  var xscale = scale/3;
-  while (x < width-margin) {
-    strokeWeight(random(width/12000,width/3000));
-    //Use perlin noise!
-    var x2 = x + random(-noise(x)*xscale, noise(x)*xscale);
-    var y2 = height/2 - noise(x)*scale;
-
-    line(x,height,x2,y2);
-    if(Math.random() > 0.9) {
-      fill(255,255,255,random(220,250));
-      ellipse(x2,y2 + random(-height/10,height/5),random(width/80,width/20));
-    }
-    //move...
-    x += random(width/800,width/600);
-
-
-  }
 }
 
 //TODO: put this somewhere mo betta.
