@@ -230,77 +230,6 @@ function setColors() {
   fill(foreground_color);
 }
 
-function vignette() {
-  var x = width/2;
-  var y = height/2;
-  var rad = width/8;
-  var alpha = 1;
-  var weight = width/300;
-
-  while(rad < (width) * Math.sqrt(2)){
-    push();
-      noFill();
-      strokeWeight(weight);
-      stroke(color(0,0,0,alpha));
-      ellipse(x,y,rad);
-      rad += weight;
-      alpha *= 1.015;
-    pop();
-  }
-}
-
-function cast(daColor) {
-  var x = width/2;
-  var y = height/2;
-  var rad = 1;
-  //var howMany = 80;
-  var alpha = 30;
-  var weight = width/100;
-
-  while(rad < (width) * Math.sqrt(2)){
-    push();
-      noFill();
-      strokeWeight(weight);
-      stroke(color(daColor._getRed(), daColor._getGreen(), daColor._getBlue(),alpha));
-      ellipse(x,y,rad);
-      rad += weight;
-      //alpha *= 0.998;
-    pop();
-  }
-}
-
-function haystack() {
-  clear();
-  randomInvert();
-  setColors();
-  margin = width/20
-  x = margin
-  startY = height/2;
-  how_many = rando(10,800);
-  ball_size = height/rando(20,200);
-  setThickness(rando(width/15000,width/200));
-
-  for(i = 0; i < how_many; i++) {
-    x = rando(margin, width-margin);
-    y = startY * rando(0.05,1.02);
-    angle = Math.PI / 2* rando(0.9, 1.1);
-
-    x2 = rando(margin, width-margin);
-    y2 = rando(startY, height-margin);
-
-    line(x,y, x2, y2);
-
-    if(Math.random() > 0.5) {
-      fill(background_color);
-    }else{
-      fill(randColor());
-      //fill(foreground_color);
-    }
-    ellipse(x,y,ball_size);
-    ellipse(x2,y2, ball_size);
-    //stroke("#000");
-  }
-}
 
 // a hairball that stays on the screen.
 function hairball(origX,origY,radius, steps) {
@@ -366,49 +295,6 @@ function rando_variance(variance) {
   return rando(1-variance, 1+variance)
 }
 
-function skyline (height_multiplier,xScale,yScale, variance_amount) {
-  //set in parent function and passed in as an argument
-  //xScale = 20;
-  //yScale = 10;
-  margin = width/10;
-  //variance_amount = rando(0,0.05) * height_mulitiplier;
-  variance_amount *= height_multiplier;
-  x1 = x2 = margin;
-  y1 = y2 = height-margin;
-  while(x2 + width/xScale * rando_variance(variance_amount) < width-(margin*2)) {
-    x2 = x1 * rando_variance(variance_amount);
-    y2 = (height - margin) - (height_multiplier * (margin + ((height-(margin*3)) * Math.round(Math.random() * yScale)/yScale * rando_variance(variance_amount))));
-
-    //vert
-    line(x1,y1,x2,y2);
-
-    x1 = x2 + width/xScale * rando_variance(variance_amount);
-    y1 = y2 * rando_variance(variance_amount);
-
-    //horiz
-    line(x2,y2,x1,y1);
-  }
-
-  //vert
-  line(x1,y1,x1,height-margin);
-
-
-}
-
-function city() {
-  clear();
-  randomInvert();
-  count = 300;
-  setThickness(width/1500);
-  xScale = rando(3,40);
-  yScale = rando(20,80);
-  //yScale = 1
-  variance_amount = rando(0,0.01);
-  for(i = 1; i <= count; i++ ) {
-    skyline(i/count,xScale,yScale, variance_amount);
-  }
-}
-
 // TODO: Port from Spectra
 /*
 function splatter() {
@@ -435,83 +321,6 @@ function splatter() {
         sol.canvas.circle(size).cx(x).cy(y).fill({color: color})
 }
 */
-
-
-
-function clouds() {
-  //clear();
-  //randomInvert();
-  //background_color =
-  background(random(["#fc0","#0af","#fffffe","#332105","#000",randColor()]));
-
-
-  //console.log(foreground_color);
-  //c = color(255,255,255,10);
-  how_many  = rando(2,100);
-  x = width/2; //rando(margin, width-margin);
-  y = height/2; //rando(height*0.2,height*0.8); //rando(margin, height-margin);
-
-  max_rad = rando(height/50, height/10);
-
-  //usually filled
-  isFilled = (Math.random() > 0.2);
-
-  //often colorful
-  colorful = Math.random() > 0.4;
-
-  foreground_color = randColor();
-
-
-  //isFilled = true;
-  for(j = 0; j < how_many; j++){
-
-    if(colorful) {
-      foreground_color = randColor();
-    }
-
-    stroke(foreground_color);
-    fill(foreground_color);
-    //setColors();
-
-    rad = rando(height/500, max_rad);
-    x = width * rando(0.25, 0.75);
-    y = height * rando(0.25, 0.75);
-
-
-    //x *= rando(0.9,1.1);
-    //y *= rando(0.9,1.1);
-    cloud(x,y,rad, isFilled);
-  }
-}
-
-function city2 () {
-  clear();
-  maxThickness = 5;
-  minThickness = 0.5;
-  count = 1000;
-  minWidth = width/50;
-  maxWidth = width*0.2;
-  minHeight = height/10;
-  maxHeight = height-(margin * 2);
-  margin = width/20;
-  for(i = 1; i <= count; i ++) {
-    maxHeight *= 0.999;
-    fill("#fff");
-    thickness = minThickness + (maxThickness * i / count);
-    strokeWeight(thickness);
-
-    buildingHeight = minHeight + (maxHeight * Math.random());
-    //if (Math.random() > 0.95)
-    //  buildingHeight *= 1.2;
-
-    x = margin + width*Math.random()
-    buildingWidth = minWidth + Math.random() * maxWidth
-    if(x + buildingWidth < width - (margin*2)) {
-      rect(x, height-buildingHeight, buildingWidth, buildingHeight);
-    }
-  }
-
-}
 
 function greenTest() {
   //background("#d0ebdd");
@@ -616,33 +425,6 @@ function texture() {
     for(var i = 0; i < 800; i++){
       strokeWeight(random(width/80,))
     }
-}
-
-function main() {
-  ///hairball(width/2,height/2,width/2,800000);
-  //zigs();
-  //smoothSquig(width/2,height/2, 20000);
-  //grass();
-  //circlePow();
-  //cast(color(180,200,250));
-  //vignette();
-  //autumnExplo();
-  //city();
-  //city2();
-  /*(setup();
-  clear();
-  randomInvert();
-  //city();
-  */
-  //setColors();
-  //stars();
-
-  /*foreground_color= "#fff";
-  background_color = "#000";*/
-  //mountain();
-  //poly_line_mountain();
-  //haystack();
-  //clouds();
 }
 
 function parsePalette(data) {
@@ -781,13 +563,6 @@ function startClot() {
   clot_counter = 1;
 }
 
-function boxPile() {
-  for(var i =0; i < 5; i++) {
-    //rect()....
-    //rotate...
-  }
-}
-
 function clot() {
   //stroke("#900");
   strokeWeight(random(width/1200,width/300));
@@ -814,34 +589,6 @@ function clot() {
     x = x2;
     y = y2;
   }
-}
-
-
-function neutrinos (){
-  var x1 = random(margin, width-margin);
-  var y1 = random(margin, height-margin);
-
-  for(i =0; i < 4000; i++) {
-    var x2 = random(margin, width-margin);
-    var y2 = random(margin, height-margin);
-    var weight = random(width/12000,width/3000);
-    var diam = width/80;
-
-    //MUTATE!
-    if(Math.random() > 0.9) {
-        weight *= random(1.1, 10);
-        diam *= random(0.5,2);
-    }
-    strokeWeight(weight);
-    line(x1,y1,x2,y2);
-    var point = getRandPointOnLine(x1,y1,x2,y2);
-    //debug(point.getY());
-    x1 = point.getX();
-    y1 = point.getY();
-    //fill(randColor());
-    ellipse(point.getX(), point.getY(),diam);
-  }
-
 }
 
 class Point {
