@@ -39,13 +39,14 @@
     <script src="vendor/file_saver.js"></script>
     <script src="scenes/clouds.js"></script>
     <script src="scenes/haystack.js"></script>
-    <script src="scenes/stars_fuzzychain.js"></script>
+    <script src="scenes/haystack.js"></script>
+    <script src="commissions/mark_h.js"></script>
     <script src="scenes/city.js"></script>
     <script src="scenes/main.js"></script>
   </head>
-  <body>
+  <body onload="mark()">
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*myles*/ randomSunset(\"#feb5ff #d76ac2 #4ca6a6 #004c4c\")|retreiveSunset()".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*myles*/ randomSunset(\"#feb5ff #d76ac2 #4ca6a6 #004c4c\")|retreiveSunset()|mark()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }

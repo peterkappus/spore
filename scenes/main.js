@@ -83,11 +83,6 @@ function twig() {
 
 }
 
-
-function debug(msg) {
-  console.log(msg);
-}
-
 function pattern() {
   clear();
   turns = 3;
@@ -134,33 +129,6 @@ function hairball(origX,origY,radius, steps) {
 //if we're more than maxDistance away from origin and our next point is even further away... then it's time to head back to the middle.
 function timeToTurnBack(origX,origY,maxDistance,x,y,nextX,nextY) {
   return(dist(origX,origY,x,y) > maxDistance && dist(origX,origY,nextX,nextY) > dist(origX,origY,x,y));
-}
-
-function cloud(x,y, rad, isFilled) {
-  how_many = rando(4,200);
-  //c = "#fff";
-  /*if(foreground_color == "#000") {
-    c = color(foreground_c,0,0,rando(10,30));
-  }else{
-    c = color(255,255,255,rando(10,30));
-  }*/
-  c = color(foreground_color._getRed(), foreground_color._getGreen(), foreground_color._getBlue(), rando(10,30));
-
-  //alert(c);
-  //c = color(255,255,255,10);
-  for(i = 0; i < how_many; i++) {
-    noFill();
-    if(isFilled) {
-      fill(c);
-    }
-
-    noStroke();
-    stroke(c);
-    rad *= 1.01
-    x *= rando(0.99,1.01);
-    y *= rando(0.99,1.01);
-    ellipse(x,y, rad);
-  }
 }
 
 function rando_variance(variance) {
