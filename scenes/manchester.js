@@ -85,8 +85,6 @@ window.spool = function(originX, originY, x,y,thickness, spoolWidth, turns, daCo
     y += xDirection * spoolHeight;
   }
 
-
-
   for(var i = 0; i < turns; i++ ) {
     strokeWeight(fatness);
     //get fatter as we go down
