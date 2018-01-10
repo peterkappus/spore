@@ -1,5 +1,5 @@
 function city() {
-  clear();
+  //clear();
   randomInvert();
   count = 300;
   setThickness(width/1500);
@@ -8,12 +8,12 @@ function city() {
   //yScale = 1
   variance_amount = rando(0,0.01);
   for(i = 1; i <= count; i++ ) {
-    skyline(i/count,xScale,yScale, variance_amount);
+    skyline(i/count, xScale, yScale, variance_amount);
   }
 }
 
 function city2 () {
-  clear();
+  //clear();
   maxThickness = 5;
   minThickness = 0.5;
   count = 1000;
@@ -24,7 +24,7 @@ function city2 () {
   margin = width/20;
   for(i = 1; i <= count; i ++) {
     maxHeight *= 0.999;
-    fill("#fff");
+    //fill("#fff");
     thickness = minThickness + (maxThickness * i / count);
     strokeWeight(thickness);
 
@@ -51,22 +51,24 @@ function skyline (height_multiplier,xScale,yScale, variance_amount) {
   variance_amount *= height_multiplier;
   x1 = x2 = margin;
   y1 = y2 = height-margin;
-  while(x2 + width/xScale * rando_variance(variance_amount) < width-(margin*2)) {
+  while(x2 + width/xScale * rando_variance(variance_amount) < width-margin) {
+    //give it some jitter
     x2 = x1 * rando_variance(variance_amount);
+
+    //go to the top(ish)
     y2 = (height - margin) - (height_multiplier * (margin + ((height-(margin*3)) * Math.round(Math.random() * yScale)/yScale * rando_variance(variance_amount))));
 
-    //vert
+    //vertical line up
     line(x1,y1,x2,y2);
 
     x1 = x2 + width/xScale * rando_variance(variance_amount);
     y1 = y2 * rando_variance(variance_amount);
 
-    //horiz
+    //horiz line across
     line(x2,y2,x1,y1);
   }
 
-  //vert
+  //vert line down
   line(x1,y1,x1,height-margin);
-
 
 }

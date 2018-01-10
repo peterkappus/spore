@@ -3,6 +3,7 @@ function neutrinos (){
   var y1 = random(margin, height-margin);
 
   for(i =0; i < 4000; i++) {
+    //stroke(random("#dbe7f1 #e0e9f1 #fff #fffef2".split(" ")));
     var x2 = random(margin, width-margin);
     var y2 = random(margin, height-margin);
     var weight = random(width/12000,width/3000);

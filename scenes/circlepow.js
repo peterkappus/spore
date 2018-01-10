@@ -38,7 +38,7 @@ window.circlePow = function() {
       c.draw();
     }
   }
-  vignette();
+  //vignette();
 }
 
 class SmartCirc {

@@ -16,7 +16,8 @@ function mark() {
   //draw a "mask" around everyhting... which is really a circle with an incredibly thick stroke.
   var weight = width;
   strokeWeight(weight);
-  stroke("#333");
+  //background
+  stroke("#fff");
   noFill();
   ellipse(width/2,height/2,diam+weight,diam+weight);
 }

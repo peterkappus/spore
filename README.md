@@ -41,4 +41,5 @@ Here are some things I've learned about working with text...
 - Then run `FONTCONFIG_PATH=. rsvg-convert -f png -w [1000] [SVG_FILE].svg > out3.png`
 
 ### AWS Deployment
+You might put this into a `deploy.sh` file to make life easier.
 `s3cmd sync ./ s3://<YOUR_BUCKET_NAME> --delete-removed -P --rexclude=.git*`

@@ -22,10 +22,10 @@ function setup() {
   //if we're probably on a desktop
   //go with SVG
   if(window.innerWidth > minWidthForSVG) {
-    canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
+    canvas = createCanvas(8/10*window.innerWidth, window.innerWidth,SVG);
   }else {
     //regular canvas (much faster for mobile :)
-    canvas = createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
+    canvas = createCanvas(window.innerWidth, window.innerWidth);
   }
   //createCanvas(600, 200, SVG); // Create SVG Canvas
 
@@ -198,32 +198,10 @@ function greenback() {
 }
 /*------------------------------------------------------------------------------------------*/
 
-function goCrackle() {
-  var daColor = random(["#300","#000"]);
-  crackle(random(width),random(height),random(200,10000),daColor);
-}
-
-//small fuzzy cracklybits like dirt
-function crackle(x,y,steps,daColor) {
-  var dx = width/150
-  var dy = height/150
-  stroke(daColor);
-  strokeWeight(0.05)
-  for(var i =0; i < steps; i++) {
-    var x2 = x + random(-dx,dx);
-    var y2 = y + random(-dy,dy);
-    line(x,y,x2,y2)
-    x = x2
-    y = y2
-  }
-}
-
-
-
 //boom!
 //TODO: add "baseColor" parameter and do shades of that color...somehow.
 function wreath(){
-  clear();
+  //clear();
   count = 10000;
   size = width/80
   maxSize = width/20;
@@ -256,10 +234,10 @@ function wreath(){
   }
 }
 
-function generate(whichOne) {
+/*function generate(whichOne) {
   eval(whichOne + "()");
   lastFuncString = whichOne;
-}
+}*/
 
 function texture() {
     for(var i = 0; i < 800; i++){

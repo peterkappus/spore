@@ -10,13 +10,13 @@
       a,.btn {
         display: inline-block;
         background: #333;
-        padding: 1.5rem 1.8rem;
+        padding: 1rem 1.2rem;
         color: #fff;
         text-align: center;
         text-decoration: none;
-        margin: 0.5rem;
+        margin: 0.3rem;
         margin-left: 0;
-        font-size: 1.8rem;
+        font-size: 1.8vh;
         }
       a:hover {
         background: #666;
@@ -30,9 +30,11 @@
     <script src="scenes/manchester.js"></script>
     <script src="scenes/rainbrick.js"></script>
     <script src="lib/utils.js"></script>
+    <script src="lib/filters.js"></script>
     <script src="scenes/sunsets.js"></script>
     <script src="scenes/boxroses.js"></script>
     <script src="scenes/grass.js"></script>
+    <script src="scenes/panton.js"></script>
     <script src="scenes/neutrinos.js"></script>
     <!-- NOT WORKING.... (at least, not when running locally off the filesystem) -->
     <script src="vendor/p5.svg.js"></script>
@@ -46,11 +48,16 @@
     <script src="scenes/fibo.js"></script>
   </head>
   <body xonload="mark()">
+    <!--myles colors: #feb5ff #d76ac2 #4ca6a6 #004c4c\-->
+    <!-- #24231a #13222d #2b2b32 #192461 -->
+    <!-- #c9dafa #e0e9f1 #7ba8e3 #fff #fffcdd -->
+
   <script>
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|manchester()|brain()|greenTest()|dreamcatcher()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*myles*/ randomSunset(\"#feb5ff #d76ac2 #4ca6a6 #004c4c\")|retreiveSunset()|mark()|doText()".split("|");
+    funcs = "colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|manchester()|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*new year*/ randomSunset(\"#dbe7f1 #e0e9f1 #7ba8e3 #fff #0d215d #fffef2\")|retreiveSunset()|dasCurve()| mark()|doText()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
+    background("#fff");
     //initialise clipboard
     new Clipboard('.btn');
   </script>
