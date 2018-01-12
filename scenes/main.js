@@ -21,16 +21,24 @@ function setup() {
   //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2,SVG);
   //if we're probably on a desktop
   //go with SVG
+
+  //var canvasWidth = window.innerWidth * 0.8
+  //var canvasHeight = canvasWidth * 10/8;
+
+  var canvasHeight = window.innerHeight * 0.8;
+  var canvasWidth = canvasHeight * 8/10;
+
   if(window.innerWidth > minWidthForSVG) {
-    canvas = createCanvas(8/10*window.innerWidth, window.innerWidth,SVG);
+    canvas = createCanvas(canvasWidth, canvasHeight,SVG);
   }else {
     //regular canvas (much faster for mobile :)
-    canvas = createCanvas(window.innerWidth, window.innerWidth);
+    canvas = createCanvas(canvasWidth, canvasHeight);
   }
   //createCanvas(600, 200, SVG); // Create SVG Canvas
 
   //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
   frameRate(80);
+  backround("#fff");
 }
 
 function grid(margin,w,h) {
