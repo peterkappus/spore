@@ -23,6 +23,7 @@
       }
     </style>
     <script src="vendor/p5.min.js"></script>
+    <script src="commissions/bruce_lee.js"></script>
     <script src="vendor/clipboard.min.js"></script>
     <script src="vendor/jquery.min.js"></script>
     <script src="scenes/mountains.js"></script>
@@ -53,11 +54,11 @@
     <!-- #c9dafa #e0e9f1 #7ba8e3 #fff #fffcdd -->
 
   <script>
-    funcs = "colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|manchester()|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*new year*/ randomSunset(\"#dbe7f1 #e0e9f1 #7ba8e3 #fff #0d215d #fffef2\")|retreiveSunset()|dasCurve()| mark()|doText()".split("|");
+    funcs = "colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|manchester()|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*new year*/ randomSunset(\"#dbe7f1 #e0e9f1 #7ba8e3 #fff #0d215d #fffef2\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>")
     }
-    background("#fff");
+    //background("#fff");
     //initialise clipboard
     new Clipboard('.btn');
   </script>
