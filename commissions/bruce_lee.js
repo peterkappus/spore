@@ -10,22 +10,21 @@ Vintage: #f1cb64, #242018*/
 
 // more mellow yellow: #ea0
 function bruce() {
-  blendTest();
-  return;
+  //blendTest();
+  //return;
   var yellow = "#fc0"; //"#ea0";
   //ecb145 ...fb4
-  ALPHA =80;
+  ALPHA =120;
   MARGIN = height/15;
-  var box_width = width/5;
-  for(i = 0; i < 2; i++) {
+  var box_width = width/8;
+  for(i = 0; i < 3; i++) {
     //middle black spine
     spine(width/2,box_width, "#333",1.5,"center");
-    var yellow_width = box_width*1.5;
-
-    /*//left side (right aligned)
+    var yellow_width = box_width*2.5;
+    //left side (right aligned)
     spine(width/2 - box_width/2, yellow_width, yellow,1, "right");
     //right side (left aligned)
-    spine(width/2 + box_width/2, yellow_width, yellow,1,"left");*/
+    spine(width/2 + box_width/2, yellow_width, yellow,1,"left");
   }
 
   svgBlendMode("multiply");
@@ -49,7 +48,7 @@ function spine(x, base_box_width, daColor, wild, alignment) {
   //strokeWeight(20);
   fill(daColor);
   //noFill();
-  var box_height = base_box_width * 0.1;
+  var box_height = base_box_width * 0.8;
   var y = margin;
 
   while(y < height - margin) {
