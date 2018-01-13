@@ -25,9 +25,11 @@ function setup() {
   //var canvasWidth = window.innerWidth * 0.8
   //var canvasHeight = canvasWidth * 10/8;
 
+  //8x10 portrait
   var canvasHeight = window.innerHeight * 0.8;
   var canvasWidth = canvasHeight * 8/10;
-
+  //square
+  var canvasHeight = canvasWidth = window.innerHeight * 0.8;
   if(window.innerWidth > minWidthForSVG) {
     canvas = createCanvas(canvasWidth, canvasHeight,SVG);
   }else {

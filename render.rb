@@ -1,6 +1,7 @@
 #Render SVG as JPG with multiply filters for consistent rendering in browser and JPG
-#usage: ruby render.rb INFILE OUTFILE WIDTH
-#this script looks for "mix-blend-mode: multiply" in the SVG and adds a call to "filter:url(#multiply);" as well as adding  a definition for the filter at the bottom of the SVG. Then it renders a JPG using a docker image with librsvg
+# usage: ruby render.rb INFILE OUTFILE WIDTH
+
+#Slightly hacky, this script deals with shortcomings in P5.js.svg looks for "mix-blend-mode: multiply" in the SVG and adds a call to "filter:url(#multiply);" as well as adding  a definition for the filter at the bottom of the SVG. Then it renders a JPG using a docker image with librsvg
 
 #assign from our pased-in arguments
 (infile, outfile, width) = ARGV;

@@ -7,31 +7,34 @@ function dasCurve() {
   var thickness = width/divisions;
   strokeWeight(thickness);
   strokeJoin(ROUND);
+  noFill();
   var colors = "#C90000 #D90 #0ad";
   stroke(random(colors.split(" ")));
+
+  //TODO: use vertices
+  beginShape();
+
 
   var x = thickness/2 + (width * Math.round(random(divisions))/divisions);
   var y = height - (thickness/2);
 
-  //segment 1 - up!
-  var x2 = x;
-  var y2 = y - (height * Math.round(random(divisions))/divisions);
-  line(x,y,x2,y2);
+  //bottom
+  vertex(x,y);
+
+  y = y - (height * Math.round(random(divisions))/divisions);
+
+  //up
+  vertex(x,y);
 
   //segment 2 - over!
-  x = x2;
-  y = y2;
-  x2 = x + (width * Math.round(random(divisions))/divisions);
-  y2 = y;
-  line(x,y,x2,y2);
+  x = x + (width * Math.round(random(divisions))/divisions);
+  vertex(x,y);
 
-  //segment 3 - up!
-  x = x2;
-  y = y2;
-  x2 = x
-  y2 = 0 //y - (height * random([1,2,3])/4);
-  line(x,y,x2,y2);
+  y = 0
+  vertex(x,y);
+  endShape();
 
+  //svgBlendMode("multiply");
 
 }
 
