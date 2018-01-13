@@ -10,8 +10,8 @@ Vintage: #f1cb64, #242018*/
 
 // more mellow yellow: #ea0
 function bruce() {
-  //blendTest();
-  //return;
+  blendTest();
+  return;
   var yellow = "#fc0"; //"#ea0";
   //ecb145 ...fb4
   ALPHA =80;
@@ -28,8 +28,7 @@ function bruce() {
     spine(width/2 + box_width/2, yellow_width, yellow,1,"left");*/
   }
 
-  //nevermind... I don't think librsvg supports "blend-mix-mode" styles, yet.
-  // svgBlendMode("multiply");
+  svgBlendMode("multiply");
 
 }
 
@@ -118,6 +117,7 @@ line(75, 25, 25, 75);
 
 //see custom function.
 //Apply after drawing vectors as this applies a class after the fact
+//NOTE: doesn't work with cairo rendering so we have to manually inject a filter into our SVG and call it from each element. Haven't dont this yet... will write a "rendering" script.
 svgBlendMode("multiply");
 
 }
