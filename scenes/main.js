@@ -38,7 +38,7 @@ function setup() {
 
   //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
   frameRate(80);
-  backround("#fff");
+  background("#fff");
 }
 
 function grid(margin,w,h) {
