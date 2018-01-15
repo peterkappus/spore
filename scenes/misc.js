@@ -5,37 +5,30 @@ var THICKNESS = 1;
 //martin luther king
 function mlk() {
     var i = 0;
-    var cols = 30;
+    var cols = 9;
     noStroke();
     //strokeWeight(THICKNESS);
     noFill();
     fill("#000");
-    rect(0,0,(width/4)-(width/cols/2),height);
-    rect(width/2,0,(width/4)-(width/cols/2),height);
+    rect(width/2,0,width,height);
     fill("#C90000");
-    rect(0,height*0.75,width,height);
-    mlk_recurse(0,30);
-    fill("#f00");
-}
-
-function mlk_recurse(y,cols) {
-  var x = 0;
-  var w = (width)/cols;
-  while(x < width) {
-    if(i % 2 == 0) {
-      fill("#000");
-    }else {
-      fill("#fff");
+    rect(0,height-(width*2.5/cols),width,height);
+    var y = 0;
+    var w = width/cols;
+    while(y < height) {
+      var x = 0;
+      while(x < width) {
+        if(i % 2 == 0) {
+          fill("#000");
+        }else {
+          fill("#fff");
+        }
+        //rect(x,y,w,w);
+        ellipse(x+(w/2),y+(w/2),w,w);
+        x += w;
+        i ++;
+      }
+      y += w;
+      //console.log(y);
     }
-
-    //rect(x,y,w,w);
-    ellipse(x,y,w,w);
-
-    x += w;
-    i ++;
   }
-  //recurse if we're not too small (or at the bottom)
-  if(w >= MIN_WIDTH) {
-    mlk_recurse(y+w,cols);
-  }
-}
