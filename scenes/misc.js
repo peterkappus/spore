@@ -1,7 +1,5 @@
 //sketches start here before they mature enough to move to their own files... I think. Let's see how this goes.
 
-var MIN_WIDTH = 10;
-var THICKNESS = 1;
 //martin luther king
 function mlk() {
     var i = 0;
@@ -26,7 +24,7 @@ function mlk() {
         //rect(x,y,w,w);
         ellipse(x+(w/2),y+(w/2),w,w);
         x += w;
-        i ++;
+        i++;
       }
       y += w;
       //console.log(y);
