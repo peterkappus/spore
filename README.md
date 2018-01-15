@@ -58,3 +58,6 @@ Here are some things I've learned about working with text...
 ## AWS Deployment
 You might put this into a `deploy.sh` file to make life easier.
 `s3cmd sync ./ s3://<YOUR_BUCKET_NAME> --delete-removed -P --rexclude=.git*`
+
+### Need some inspiration:
+https://github.com/chiunhau/p5-gallery
