@@ -24,11 +24,17 @@ var env, osc;
 //let's record
 var recorder, soundFile;
 
+//frame counter
+//var frame =0;
+var rate = 6;
+
+var bgColor;
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(window.innerHeight, window.innerHeight);
 
-backgroundColor = color("#fc0");
+  bgColor = color("#375fa3");
+  backgroundColor = color(bgColor);
   textAlign(CENTER);
 
   env = new p5.Env();
@@ -39,7 +45,9 @@ backgroundColor = color("#fc0");
 
   //start a lower pitch
   //osc2 = getOsc(env);
-  frameRate(6);
+
+
+  frameRate(rate);
 
   //record it!
   recorder = new p5.SoundRecorder();
@@ -60,10 +68,40 @@ function getOsc(envelope) {
   return(myOsc);
 }
 
+
 function draw() {
+  var index = Math.round(random(notes.length));
+
+  if(playing) {
+    //circles
+    //fill(randColor());
+    fill(0,0,0,150);
+    noStroke();
+    var cols = 10;
+    var diam = width/cols;
+    ellipse(Math.round(random(cols-1)) * diam + (diam/2),Math.round(random(cols-1)) * diam + (diam/2),diam*0.8);
+  }
+
+  //fade....
+  fill(color(bgColor._getRed(),bgColor._getGreen(),bgColor._getBlue(),20));
+  rect(0,0,width,height);
+
+
   octave = Math.round(random(0,4));
+  note = random(notes);
   osc.freq(midiToFreq(bottom_pitch + octave * 12 + random(notes)));
+
+  //lower note... change more slowly (every 16 beats)
+  /*octave = Math.round(random(0,2));
+  if(frame % 16 == 0) {
+    osc2.freq(midiToFreq(bottom_pitch + octave * 12 + random(notes)));
+  }
+  */
+  //rate += 0.01;
+
+  //frameRate(rate);
 }
+
 
 function startRecording() {
   debug('start recording');
@@ -85,11 +123,10 @@ function mousePressed() {
     if (!playing) {
       startRecording();
       env.triggerAttack();
-      background("#fc0");
+      background(bgColor);
       playing = true;
     } else {
       env.triggerRelease();
-      background("#fff");
       //stop recording after reverbtime + 10%
       setTimeout(function() {
         debug('stopping recording (after reverb stops)');
