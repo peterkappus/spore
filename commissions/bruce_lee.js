@@ -14,11 +14,13 @@ function bruce() {
   //return;
   var yellow = "#fc0"; //"#ea0";
   //ecb145 ...fb4
-  ALPHA =120;
-  MARGIN = height/15;
+  ALPHA =220;
+  MARGIN = height/10;
   var box_width = width/8;
-  for(i = 0; i < 3; i++) {
+  for(i = 0; i <1; i++) {
     //middle black spine
+    spine(width/2,box_width, "#333",1.5,"center");
+    //do it twice... for extra blackness
     spine(width/2,box_width, "#333",1.5,"center");
     var yellow_width = box_width*2.5;
     //left side (right aligned)
@@ -48,7 +50,7 @@ function spine(x, base_box_width, daColor, wild, alignment) {
   //strokeWeight(20);
   fill(daColor);
   //noFill();
-  var box_height = base_box_width * 0.8;
+  var box_height = base_box_width * 0.5;
   var y = margin;
 
   while(y < height - margin) {
@@ -75,8 +77,10 @@ function spine(x, base_box_width, daColor, wild, alignment) {
         start_x += random(-width/40,width/40);
 
         translate(x,y);
-        rotate(random(-PI/20,PI/20));
-      rect(start_x,-box_height/2,box_width,box_height);
+        rotate(random(-PI/40,PI/40));
+      //rect(start_x,-box_height/2,box_width,box_height);
+      wobbleRect(start_x,-box_height/2,box_width,box_height);
+
     pop();
 
     y += box_height * random(0.9,1.1);
