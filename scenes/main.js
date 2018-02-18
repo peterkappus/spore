@@ -41,6 +41,8 @@ function setup() {
   //createCanvas(window.innerWidth-margin*2, window.innerWidth-margin*2);
   frameRate(80);
   background("#fff");
+
+  flower();
 }
 
 function grid(margin,w,h) {
