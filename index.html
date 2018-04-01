@@ -17,9 +17,9 @@
         color: #fff;
         text-align: center;
         text-decoration: none;
-        margin: 0.3rem;
+        margin: 0.1rem;
         margin-left: 0;
-        font-size: 1.8vh;
+        font-size: 5vh;
         }
       a:hover {
         background: #666;
@@ -27,6 +27,7 @@
     </style>
     <script src="vendor/p5.min.js"></script>
     <script src="vendor/p5.dom.js"></script>
+    <script src="vendor/p5.sound.js"></script>
     <script src="commissions/bruce_lee.js"></script>
     <script src="vendor/clipboard.min.js"></script>
     <script src="vendor/jquery.min.js"></script>
@@ -37,6 +38,7 @@
     <script src="lib/utils.js"></script>
     <script src="lib/filters.js"></script>
     <script src="scenes/sunsets.js"></script>
+    <script src="scenes/reverb.js"></script>
     <script src="scenes/misc.js"></script>
     <script src="scenes/boxroses.js"></script>
     <script src="scenes/flower.js"></script>
@@ -61,7 +63,7 @@
 
   <script>
     //funcs = "colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*mlk day*/ randomSunset(\"#000 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|mlk()|wonkyCirc(width/2,height/2,height/5)|wonky()|getCustomBackground()|flower()".split("|");
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|getCustomBackground()|flower()".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|reverby()|getCustomBackground()|flower()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>");
     }

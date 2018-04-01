@@ -22,9 +22,6 @@ var bottom_pitch = 45;
 
 var env, osc;
 
-//let's record
-var recorder, soundFile;
-
 //frame counter
 //var frame =0;
 var rate = 6;
@@ -51,7 +48,6 @@ function setup() {
   frameRate(rate);
 
   //record it!
-  recorder = new p5.SoundRecorder();
 
   //avoid clipping in captured audio
   masterVolume(0.5)
@@ -108,21 +104,6 @@ function draw() {
   //frameRate(rate);
 }
 
-
-function startRecording() {
-  debug('start recording');
-  soundFile = new p5.SoundFile();
-  recorder.record(soundFile);
-}
-
-function debug(msg){
-  console.log(msg);
-}
-
-function stopRecording() {
-  recorder.stop();
-  save(soundFile, 'abstraktor.wav');
-}
 
 function mousePressed() {
   if (mouseX > 0 && mouseX < width && mouseY < height && mouseY > 0) {

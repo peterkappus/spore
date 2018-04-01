@@ -7,6 +7,13 @@ Beautiful things to look at.
 - Click a button.
 - If width > 800px you can press a key and grab an SVG.
 
+## Live updating with Docker & P5 Manager
+- First time: `docker build -t p5manager .`
+- Then, `docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager bash`
+- Inside the container: `cd /app && p5 s`
+- click the "." on the left and it should live reload whenever you change the code.
+
+
 ## Converting SVG to PNG (or whatever)
 `cat file.svg | docker run -i dbtek/librsvg rsvg-convert -f png -w 10000 > out.png`
 Note: Use `-w` switch to provide width in pixels

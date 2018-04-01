@@ -4,6 +4,7 @@
 FROM node
 RUN apt-get update && apt-get install -y vim
 RUN npm install -g p5-manager
+#RUN p5 s
 
 # Setup:
 # docker build -t p5manager .
@@ -13,4 +14,4 @@ RUN npm install -g p5-manager
 # docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager bash
 
 # Once inside the container...
-# cd /app/my_collection/ && p5 s
+# cd /app && p5 s
