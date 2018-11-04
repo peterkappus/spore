@@ -3,7 +3,9 @@
     <!--xmeta name="viewport" content="initial-scale=1, maximum-scale=1"-->
     <style type="text/css">
       body {
-        font-family: helvetica, sans-serif}
+        font-family: helvetica, sans-serif;
+        margin-left: 55px;
+      }
       canvas {
         margin: 40px;
       }
@@ -13,13 +15,13 @@
       a,.btn {
         display: inline-block;
         background: #333;
-        padding: 1rem 1.2rem;
+        padding: 0.8rem;
         color: #fff;
         text-align: center;
         text-decoration: none;
-        margin: 0.1rem;
+        margin: 0.4rem;
         margin-left: 0;
-        font-size: 5vh;
+        font-size: 2vmax;
         }
       a:hover {
         background: #666;
@@ -38,10 +40,12 @@
     <script src="lib/utils.js"></script>
     <script src="lib/filters.js"></script>
     <script src="scenes/sunsets.js"></script>
-    <script src="scenes/reverb.js"></script>
+    <!--script src="scenes/reverb.js"></script-->
     <script src="scenes/misc.js"></script>
     <script src="scenes/boxroses.js"></script>
+    <script src="scenes/dotmass.js"></script>
     <script src="scenes/flower.js"></script>
+    <script src="scenes/altflower.js"></script>
     <script src="scenes/grass.js"></script>
     <script src="scenes/panton.js"></script>
     <script src="scenes/neutrinos.js"></script>
@@ -55,6 +59,9 @@
     <script src="scenes/city.js"></script>
     <script src="scenes/main.js"></script>
     <script src="scenes/fibo.js"></script>
+    <script src="scenes/objects.js"></script>
+    <!--script src="scenes/reverb.js"></script-->
+    <!--script src="scenes/wind_chimes.js"></script-->
   </head>
   <body xonload="mark()">
     <!--myles colors: #feb5ff #d76ac2 #4ca6a6 #004c4c\-->
@@ -63,7 +70,7 @@
 
   <script>
     //funcs = "colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*mlk day*/ randomSunset(\"#000 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|mlk()|wonkyCirc(width/2,height/2,height/5)|wonky()|getCustomBackground()|flower()".split("|");
-    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|reverby()|getCustomBackground()|flower()".split("|");
+    funcs = "colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|reverby()|windChime()|getCustomBackground()|flower()|altFlower()|objects()|dotMass()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>");
     }

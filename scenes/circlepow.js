@@ -1,6 +1,6 @@
 window.circlePow = function() {
   clear();
-  background(10);
+  background(0,0,50);
   var howMany = 800;
   var minRad = width/200;
   var maxRad = width/3;

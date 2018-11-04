@@ -20,8 +20,6 @@ function nonflower() {
 }
 
 
-
-
 function flower(x = 0.5) {
 	clear();
 	background("#fff");
@@ -39,8 +37,8 @@ function flower(x = 0.5) {
 	var factor = randFactor();
 	var factorB = randFactor();
 
-	var k = Math.PI*2/(factor + random(0.0001,0.001));//random(5);
-	var v = Math.PI*2/((factor  * factorB +  random(0.0001,0.001)));
+	var k = Math.PI*0.2/(factor + random(0.0001,0.001));//random(5);
+	var v = Math.PI*16/((factor  * factorB +  random(0.0001,0.001)));
 	var dr = 1.00038;
 	var angle = 0;
 	var angleIncrement = 5;

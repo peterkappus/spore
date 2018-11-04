@@ -31,11 +31,13 @@ function keyPressed() {
   //s to "set" reverb
   //need a way to start a new reverb object...
   //okay, but how to remove them?
-  /*if(keyCode == 83) {
-    newVerb = new p5.Reverb();
+  if(keyCode == 83) {
+    myVerb.set(reverbTime);
+    /*newVerb = new p5.Reverb();
     newVerb.process(mic,reverbTime,1);
     reverbs.push(newVerb);
-  }*/
+    */
+  }
 
   //myVerb.set(reverbTime);
 

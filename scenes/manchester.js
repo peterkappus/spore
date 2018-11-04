@@ -156,13 +156,13 @@ window.manchester = function() {
 window.dreamcatcher = function() {//function(x,y,rad,count,color,thickness) {
   var x = width/2;
   var y = height/2;
-  var count = 1296; //Law has 1293 followers :)
+  var count = 1336; //Law has this many twitter followers :)
   var rad = width*0.25;
   stroke("#000");
   var thickness = width/2000;
   strokeWeight(thickness);
   var hole_size = 0.5 //% of rad
-  var wildness = 0.95;//random([0.85,0.95,0.98,0.9]);
+  var wildness = 0.95;//=random([0.85,0.95,0.98,0.9]);
   for(i = 0; i < count; i++) {
     var angle = random(2*PI)
     var x1 = x + sin(angle)*rad;

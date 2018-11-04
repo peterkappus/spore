@@ -3,7 +3,7 @@
 //funny curve
 
 function dasCurve() {
-  var divisions = 3;
+  var divisions = 5;
   var thickness = width/divisions;
   strokeWeight(thickness);
   strokeJoin(ROUND);

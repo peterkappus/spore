@@ -42,7 +42,7 @@ function setup() {
   frameRate(80);
   background("#fff");
 
-  flower();
+  //flower();
 }
 
 function grid(margin,w,h) {

@@ -9,19 +9,41 @@ Beautiful things to look at.
 
 ## Live updating with Docker & P5 Manager
 - First time: `docker build -t p5manager .`
-- Then, `docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager bash`
-- Inside the container: `cd /app && p5 s`
-- click the "." on the left and it should live reload whenever you change the code.
+- Then run
+```
+docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager bash
+```
+
+- Inside the container run:
+```
+cd /app && p5 s
+```
+- open a browser and visit http://localhost:5555
+- click the "*" and then the "." on the left and it should live reload whenever you change the code.
 
 
-## Converting SVG to PNG (or whatever)
-`cat file.svg | docker run -i dbtek/librsvg rsvg-convert -f png -w 10000 > out.png`
-Note: Use `-w` switch to provide width in pixels
+## Convert/render an SVG to PNG (raster)
+
+```
+cat file.svg | docker run -i dbtek/librsvg rsvg-convert -u -f png -w 5000 > out.png
+```
+
+Note: Use `-w` switch to provide width in pixels, and `-u` to allow HUGE svg files.
+
+### Converting every svg in a folder to a png
+
+```
+#!/bin/bash
+for i in $( ls *.svg ); do
+    cat $i | docker run -i dbtek/librsvg rsvg-convert -f png -w 5000 > $i.png
+done
+```
 
 ## Notes on blend modes (e.g. multiply)
 The only way I could get things to blend properly using SVG files was to add `mix-blend-mode: multiply` to the style of the element (for browser rendering) and also add an `feBlend` filter in the `defs` section of the doc and refer to it in each element I wanted to blend (for rendering by librsvg/Cairo) (NOTE: adding these styles could probably  be done via a single `g` (group) element rather than by applying to individual elements). You'll need to do some search/replacing to get things to render correctly but use the following example as a guide:
 
-```<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+```
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
   <filter id="multiply">
       <feBlend mode="multiply" in="BackgroundImage"/>
@@ -48,7 +70,8 @@ Here are some things I've learned about working with text...
 - create a "fonts" directory in the folder where you want to render your SVG
 - Create a file called "fonts.conf" like so
 
-```<?xml version="1.0"?>
+```
+<?xml version="1.0"?>
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
   <dir>fonts/</dir>

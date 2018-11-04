@@ -10,6 +10,7 @@ function wonky() {
     strokeWeight(width/5);
     noFill();
     stroke(setAlpha(randColor(),70));
+    //wonkyCirc(x,y,rad,wonkFactor);
     ellipse(x,y,width * 0.5, width * 0.5);
   }
   svgBlendMode("multiply");
