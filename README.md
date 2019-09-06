@@ -11,13 +11,9 @@ Beautiful things to look at.
 - First time: `docker build -t p5manager .`
 - Then run
 ```
-docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager bash
+docker run -it -p 5555:5555 -p 35729:35729 -v"$(PWD)":/app p5manager
 ```
 
-- Inside the container run:
-```
-cd /app && p5 s
-```
 - open a browser and visit http://localhost:5555
 - click the "*" and then the "." on the left and it should live reload whenever you change the code.
 
