@@ -9,7 +9,10 @@ function cacti() {
   //stroke(color(0,0,0,50));
   stroke("#000");
   angleMode(DEGREES);
-  branch(width/2,height,width/120,0,width/5,0);
+  branch(width/2,height,width/120,0,width/10,0);
+  branch(width/3,height,width/120,0,width/10,0);
+  branch(2*width/3,height,width/120,0,width/10,0);
+
 }
 
 function branch(x,y,thickness,angle,length, depth){
@@ -20,9 +23,11 @@ function branch(x,y,thickness,angle,length, depth){
   line(x,y,newX,newY);
   da = 50;
     if(depth < 9){
-      for(var i=0; i < 1 + random(2); i++) {
+      for(var i=0; i < 1 + random(1); i++) {
         //debug(i);
-        branch(newX,newY,thickness * random(0.6,0.85),angle - (da/2) + random(0,da),length * random(0.5,0.9),depth+1);
+        branch(newX,newY,thickness * random(0.6,0.85),angle - (da/2) + random(0,da),length * random(0.5,0.9) * random([1,1,1,1,1,1,1,1,1,1,1,1,1,random(1,5)]),depth+1);
+        //MUTATION!
+        //branch(newX,newY,thickness * random(0.6,0.85),angle - (da/2) + random(0,da),length * random(0.5,0.9) * random([1,1,1,1,1,1,1,1,1,1,1,1,1,random(1,5)]),depth+1);
       }
     } else {
       flower(newX,newY);
