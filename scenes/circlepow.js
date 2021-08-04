@@ -45,6 +45,7 @@ class SmartCirc {
 
   distanceTo(circ) {
     return Math.hypot(this.x - circ.x,this.y - circ.y);
+    //could also use built in p5 "dist(x1,y1,x2,y2)" function... but glad we know about hypot now :) 
   }
 
   overlaps(circ) {

@@ -46,6 +46,7 @@
     <script src="scenes/dotmass.js"></script>
     <script src="scenes/flower.js"></script>
     <script src="scenes/altflower.js"></script>
+    <script src="scenes/tree.js"></script>
     <script src="scenes/grass.js"></script>
     <script src="scenes/panton.js"></script>
     <script src="scenes/neutrinos.js"></script>
@@ -70,9 +71,10 @@
     <!-- #24231a #13222d #2b2b32 #192461 -->
     <!-- #c9dafa #e0e9f1 #7ba8e3 #fff #fffcdd -->
 
+  <div style="height: 4rem; overflow-y: hidden; margin-bottom: 1rem; overflow-x: scroll; white-space: nowrap">
   <script>
     //funcs = "rocks()|colorZig()|city()|city2()|mountains()|stars()|clouds()|haystack()|wreath()|upshot()|circlePow()|startClot()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|greenback()|/*whiteback*/ background(\"#fff\")|brain()|greenTest()|dreamcatcher()|splatter()|goCrackle()|hairball(width/2,height/2,width/10,800000)|randomSunset()|/*goodnight*/ randomSunset(\"#24231a #13222d #192461 #c90000\")|/*mlk day*/ randomSunset(\"#000 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|mlk()|wonkyCirc(width/2,height/2,height/5)|wonky()|getCustomBackground()|flower()".split("|");
-    funcs = "rocks()|colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|reverby()|windChime()|getCustomBackground()|flower()|altFlower()|objects()|dotMass()".split("|");
+    funcs = "tree()|rocks()|colorZig()|city()|mountains()|stars()|clouds()|haystack()|upshot()|circlePow()|grass()|vignette()|neutrinos()|boxRoses()|goZigs()|/*Clear*/ background(\"#fff\")|dreamcatcher()|splatter()|goCrackle()|randomSunset()| /*yellow red*/ randomSunset(\"#FC0 #fff #c90000 #c90000\")|retreiveSunset()|dasCurve()| mark()|doText()|bruce()|wonky()|reverby()|windChime()|getCustomBackground()|flower()|altFlower()|objects()|dotMass()".split("|");
     for(var i in funcs) {
       document.writeln("<a href='javascript: " + funcs[i] +"'>" + funcs[i].replace(/\(.+$/,'') + "</a>");
     }
@@ -88,6 +90,7 @@
     </button>
     <small>Press "d" to save svg.</small>
     <small id="debug"></small>
-    <br>
+  </div>
+
   </body>
 </html>
